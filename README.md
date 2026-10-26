@@ -2,7 +2,7 @@
 
 Single Page Application acadêmica para conversão e análise de moedas. O projeto será desenvolvido de forma incremental com React, Vite e JavaScript.
 
-> Status atual: estrutura inicial e interface estática concluídas. A aplicação ainda não consulta cotações reais.
+> Status atual: formulário interativo com eventos e estado local. A aplicação ainda não consulta cotações reais.
 
 ## Objetivo
 
@@ -12,6 +12,8 @@ Construir uma interface em português que permita converter moedas com dados da 
 
 - React;
 - JavaScript e JSX;
+- Componentes e props;
+- Eventos e `useState`;
 - Vite;
 - CSS responsivo;
 - Git.
@@ -49,8 +51,8 @@ As funcionalidades ainda precisam ser validadas com o Board fornecido pelo profe
 ## Evolução planejada
 
 1. Preparação, JSX e interface estática — concluída;
-2. Componentização e props;
-3. Eventos, formulários e `useState`;
+2. Componentização e props — concluída;
+3. Eventos, formulários e `useState` — concluída;
 4. Lifting State Up;
 5. Integração com a API usando `fetch`, `async/await` e `useEffect`;
 6. Custom hook e tratamento dos estados da requisição;

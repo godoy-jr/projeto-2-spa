@@ -169,6 +169,10 @@ input, select {
   background: #f8fafc;
 }
 input:disabled, select:disabled, button:disabled { cursor: not-allowed; opacity: 0.72; }
+input:focus, select:focus {
+  border-color: var(--blue);
+  outline: 3px solid rgba(37, 99, 235, 0.14);
+}
 .exchange-icon {
   min-height: 48px;
   display: grid;
@@ -185,12 +189,23 @@ button {
   color: white;
   background: var(--blue);
   font-weight: 750;
+  cursor: pointer;
 }
+.converter-card button:hover { background: var(--blue-dark); }
 .form-note {
-  grid-column: 1 / -1;
   margin: 4px 0 0;
   color: var(--muted);
   font-size: 0.86rem;
+}
+.form-feedback { grid-column: 1 / -1; }
+.error-message { margin: 12px 0 0; color: #b42318; font-weight: 700; }
+.conversion-result {
+  margin: 18px 0 0;
+  padding: 18px;
+  border-radius: 12px;
+  color: var(--navy);
+  background: var(--blue-soft);
+  font-size: 1.08rem;
 }
 
 .history-section {
@@ -219,7 +234,7 @@ footer p { margin: 0; }
   .hero { grid-template-columns: 1fr; gap: 48px; padding-block: 54px 72px; }
   .preview-card { max-width: 560px; transform: none; }
   .converter-card { grid-template-columns: 1fr 1fr; }
-  .amount-field, .converter-card button, .form-note { grid-column: 1 / -1; }
+  .amount-field, .converter-card button, .form-feedback { grid-column: 1 / -1; }
   .exchange-icon { display: none; }
   .history-section { grid-template-columns: 1fr; gap: 18px; padding: 42px; }
 }
