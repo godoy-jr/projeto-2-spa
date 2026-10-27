@@ -64,3 +64,5 @@ O assistente responsável pelas alterações locais conectou o catálogo e a tax
 O mesmo assistente extraiu posteriormente a consulta de taxa para `useExchangeRate` e criou testes específicos com serviço simulado para sucesso, erro e nova tentativa, cancelamento, respostas atrasadas, sequência A → B → A, moedas iguais e desmontagem. As verificações do hook não usaram a rede real.
 
 O assistente implementou também o hook histórico, a seleção dos oito períodos e o gráfico responsivo com Recharts, além de testes simulados dos estados assíncronos. Uma consulta HTTP real separada confirmou dados do período de sete dias; não foi atribuída a ela evidência de revisão visual.
+
+O assistente conectou a tabela aos utilitários já testados, implementou a geração e o download do CSV e adicionou testes automatizados de conteúdo, caracteres especiais, nome de arquivo, lista vazia e ciclo da URL temporária. Não foi atribuída aos testes automatizados evidência de download visual no navegador.

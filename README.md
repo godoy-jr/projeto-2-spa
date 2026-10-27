@@ -69,8 +69,8 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 7. Conversor com moedas e taxas reais usando `useEffect` — concluída;
 8. Custom hook reutilizável para taxa — concluída;
 9. Histórico e gráfico — concluída;
-10. Tabela, filtros e ordenação;
-11. Exportação CSV;
+10. Tabela, filtros e ordenação — concluída;
+11. Exportação CSV — concluída;
 12. Revisão, testes, documentação e publicação.
 
 ## Entregáveis e pendências

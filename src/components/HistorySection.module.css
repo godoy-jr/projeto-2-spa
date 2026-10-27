@@ -75,6 +75,51 @@
   border-color: currentColor;
 }
 
+.tableSection { margin-top: 32px; border-top: 1px solid var(--border); padding-top: 28px; }
+.tableHeading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.tableHeading h3 { margin: 0 0 6px; color: var(--navy); }
+.tableHeading p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.exportButton,
+.tableActions button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 9px;
+  color: white;
+  background: var(--blue);
+  font-weight: 750;
+  cursor: pointer;
+}
+.exportButton:disabled { cursor: not-allowed; opacity: 0.55; }
+.filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+.filters label,
+.tableActions label { display: grid; gap: 7px; color: var(--navy); font-size: 0.8rem; font-weight: 750; }
+.filters input,
+.tableActions select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.tableActions { display: flex; align-items: end; gap: 12px; margin-top: 14px; }
+.tableActions label { min-width: 150px; }
+.tableActions button { color: var(--blue); border: 1px solid var(--blue); background: white; }
+.filterError { margin: 16px 0 0; color: #b42318; font-weight: 700; }
+.noRows { margin: 18px 0 0; color: var(--muted); }
+.tableWrapper { overflow-x: auto; margin-top: 20px; }
+.tableWrapper table { width: 100%; border-collapse: collapse; text-align: left; }
+.tableWrapper th,
+.tableWrapper td { padding: 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.tableWrapper th { color: var(--navy); background: #f8fafc; font-size: 0.8rem; text-transform: uppercase; }
+.tableWrapper td { color: var(--text); font-variant-numeric: tabular-nums; }
+
 @media (max-width: 860px) {
   .historySection {
     padding: 36px;
@@ -91,4 +136,13 @@
   .chartCard { padding: 16px 8px 12px; }
   .chart { height: 300px; }
   .statePanel { align-items: flex-start; flex-direction: column; padding-inline: 8px; }
+  .tableHeading,
+  .tableActions { align-items: stretch; flex-direction: column; }
+  .filters { grid-template-columns: 1fr; }
+  .tableActions label { width: 100%; }
+  .exportButton { width: 100%; }
+}
+
+@media (min-width: 561px) and (max-width: 860px) {
+  .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

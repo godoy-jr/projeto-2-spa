@@ -134,3 +134,21 @@ Foram adicionados sete testes de `useHistoricalRates` com serviço simulado e se
 - o gráfico foi separado em chunk sob demanda, sem aviso de tamanho excessivo.
 
 Em verificação HTTP real separada dos testes simulados, EUR/BRL de `2026-10-21` a `2026-10-27` retornou sete registros publicados. O primeiro foi `2026-10-21`, taxa `5.6459`, e o último `2026-10-27`, taxa `5.9427`. Essa consulta confirma o serviço e os dados, mas não substitui a revisão visual do gráfico.
+
+## Verificação da tabela, filtros e CSV
+
+Os testes existentes de processamento cobrem filtros individuais e combinados, intervalos inválidos, ordenação numérica e cronológica nos dois sentidos e preservação do array original. Foram adicionados cinco testes de CSV para:
+
+- cabeçalhos e ordem recebida;
+- escaping de `;`, aspas e quebra de linha;
+- BOM UTF-8 e bloqueio de lista vazia;
+- nome identificável com par e intervalo;
+- criação do download e revogação da URL temporária.
+
+Resultados após integrar tabela e exportação:
+
+- `npm test`: 56 testes aprovados, 0 falhas e 0 ignorados;
+- `npm run lint`: concluído sem erros ou avisos;
+- `npm run build`: concluído com sucesso, 612 módulos transformados.
+
+Esses testes comprovam processamento e geração do arquivo de forma simulada. O download efetivo pelo navegador e a apresentação visual da tabela permanecem para a revisão final.

@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState } from 'react'
 import { useHistoricalRates } from '../hooks/useHistoricalRates'
+import HistoryTable from './HistoryTable'
 import styles from './HistorySection.module.css'
 
 const HistoryChart = lazy(() => import('./HistoryChart'))
@@ -98,6 +99,12 @@ function HistorySection({ sourceCode, targetCode, pairRevision, enabled }) {
                 formatRate={formatRate}
               />
             </Suspense>
+            <HistoryTable
+              records={data}
+              sourceCode={sourceCode}
+              targetCode={targetCode}
+              interval={interval}
+            />
           </>
         )}
       </div>

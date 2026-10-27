@@ -251,8 +251,6 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 ## 9. Pendências conhecidas
 
 - configurar a navegação interativa entre os layouts do Figma e realizar uma revisão visual final do arquivo;
-- implementar tabela, filtros e ordenação;
-- implementar exportação CSV;
 - revisar testes, responsividade e todos os estados da aplicação;
 - publicar a versão final da aplicação.
 
@@ -269,3 +267,5 @@ As funções puras de conversão direta e demonstrativa, cálculo dos oito perí
 O conversor carrega moedas e taxa real com `useEffect`, usa `valor × taxa` e mostra a data efetiva. A consulta de taxa foi extraída para `useExchangeRate`. Consultas substituídas são canceladas, e o estado da taxa é vinculado ao par, à revisão e à tentativa atual para impedir a exibição de respostas antigas. Moedas iguais preservam o valor sem taxa ou data inventada.
 
 O histórico real aceita os oito períodos obrigatórios, recalcula os limites de calendário e atualiza ao mudar o par ou período. `useHistoricalRates` preserva cancelamento e proteção contra respostas antigas. O gráfico responsivo usa somente os registros publicados retornados pela API; moedas iguais e séries vazias não geram dados artificiais.
+
+A tabela apresenta data, origem, destino e cotação, com filtros combinados inclusivos, validação, limpeza, ordenação nos dois sentidos e contagem. O CSV contém exatamente a lista filtrada e ordenada, possui cabeçalhos e nome identificável, protege caracteres especiais e é bloqueado quando não há registros.

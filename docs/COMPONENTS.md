@@ -16,7 +16,8 @@ main.jsx
     │   ├── Hero
     │   ├── ConverterForm
     │   └── HistorySection
-    │       └── HistoryChart (carregamento sob demanda)
+    │       ├── HistoryChart (carregamento sob demanda)
+    │       └── HistoryTable
     └── Footer
 ```
 
@@ -30,6 +31,7 @@ main.jsx
 | `ConverterForm` | Consome o hook da taxa, apresenta estados da requisição, valida o valor e calcula com a taxa direta. | `src/components/ConverterForm.jsx` | `src/components/ConverterForm.module.css` | Catálogo e seu estado, par e revisão, callbacks de alteração, inversão e nova tentativa. | `amount`, `result` e erro de validação. |
 | `HistorySection` | Seleciona um dos oito períodos, consome o hook histórico e apresenta os estados e o gráfico. | `src/components/HistorySection.jsx` | `src/components/HistorySection.module.css` | `sourceCode`, `targetCode`, `pairRevision` e `enabled`. | `period`: período selecionado. |
 | `HistoryChart` | Renderiza a série real em um gráfico de linha responsivo carregado sob demanda. | `src/components/HistoryChart.jsx` | `src/components/HistorySection.module.css` | `data`, par e formatadores. | Nenhum. |
+| `HistoryTable` | Filtra, ordena, conta e exporta os registros históricos visíveis. | `src/components/HistoryTable.jsx` | `src/components/HistorySection.module.css` | `records`, par e intervalo. | Filtros de data/cotação e opções de ordenação. |
 | `Footer` | Exibe a identificação acadêmica e a fonte planejada para dados reais. | `src/components/Footer.jsx` | `src/components/Footer.module.css` | `dataSource`. | Nenhum. |
 
 ## Fluxo de dados e comportamento atual
@@ -48,6 +50,8 @@ main.jsx
 - Quando as moedas são iguais, o valor é preservado sem consultar ou inventar taxa e data.
 - `HistorySection` consome `useHistoricalRates`; alterar par ou período cria uma nova consulta e invalida visualmente os dados anteriores.
 - `HistoryChart` recebe somente os registros publicados pela API, sem interpolação ou fabricação de datas.
+- `HistoryTable` combina filtros inclusivos, mostra a contagem visível e reutiliza `filterHistory` e `sortHistory` sem modificar a série original.
+- A exportação reutiliza exatamente os registros filtrados e ordenados; fica desabilitada para lista vazia ou filtros inválidos.
 - A alteração de qualquer moeda limpa resultado e erro anteriores.
 - `amount`, `result` e `error` permanecem locais porque não são consumidos por outros componentes.
 
@@ -58,7 +62,7 @@ main.jsx
 ## Pendências fora desta etapa
 
 - navegação interativa e revisão visual final dos layouts do Figma;
-- tabela, filtros, ordenação e exportação CSV.
+- revisão final de acessibilidade, responsividade e publicação.
 
 ## Funções de negócio
 
@@ -69,3 +73,7 @@ As funções puras de conversão, períodos, filtros e ordenação ficam em `src
 `src/hooks/useExchangeRate.js` recebe origem, destino, revisão do par e indicação de que a consulta está habilitada. Ele devolve `quote`, `status`, `error` e `retry`. O hook encapsula carregamento por token, sucesso, erro, ausência de dados, identidade de moedas, cancelamento e proteção contra respostas antigas. Nos testes, `requestRate` permite injetar um serviço simulado; a aplicação usa `getLatestRate` por padrão.
 
 `src/hooks/useHistoricalRates.js` aplica `calculateHistoricalInterval`, consulta `getHistoricalRates` e devolve `data`, `status`, `error`, `interval` e `retry`. O hook trata cancelamento, resposta atrasada, troca A → B → A, ausência de dados e moedas iguais sem fabricar histórico.
+
+## Exportação CSV
+
+`src/utils/csv.js` cria CSV com BOM UTF-8, separador `;`, cabeçalhos e escaping de separadores, aspas e quebras de linha. O nome inclui par e intervalo. A URL temporária do arquivo é revogada depois do início do download.
