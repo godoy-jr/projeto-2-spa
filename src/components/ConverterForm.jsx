@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { convertWithDemoRates } from '../utils/conversion'
 import styles from './ConverterForm.module.css'
 
 function ConverterForm({
@@ -24,13 +25,13 @@ function ConverterForm({
 
     const numericAmount = Number(amount)
 
-    if (!amount || numericAmount <= 0) {
+    if (!amount || !Number.isFinite(numericAmount) || numericAmount <= 0) {
       setError('Informe um valor maior que zero.')
       setResult(null)
       return
     }
 
-    const convertedAmount = numericAmount * (demoRates[sourceCode] / demoRates[targetCode])
+    const convertedAmount = convertWithDemoRates(numericAmount, sourceCode, targetCode, demoRates)
 
     setError('')
     setResult(convertedAmount)

@@ -38,7 +38,7 @@ main.jsx
 - A inversão troca origem e destino em `App`, preserva o valor local do formulário e limpa resultado e erro anteriores.
 - `Header` transforma `navigationItems` em links usando `map`.
 - `ConverterForm` transforma `currencies` em opções usando `map`.
-- A submissão converte `amount` para número, rejeita entrada vazia, zero ou negativa e calcula os demais casos com `demoRates`.
+- A submissão converte `amount` para número, rejeita entrada vazia, não finita, zero ou negativa e delega o cálculo demonstrativo puro a `convertWithDemoRates`.
 - A alteração de qualquer moeda limpa resultado e erro anteriores.
 - `amount`, `result` e `error` permanecem locais porque não são consumidos por outros componentes.
 
@@ -49,6 +49,9 @@ main.jsx
 ## Pendências fora desta etapa
 
 - navegação interativa e revisão visual final dos layouts do Figma;
-- Collection e testes da API Frankfurter no Postman;
 - integração da API, efeitos e custom hook;
 - histórico, gráfico, tabela, filtros, ordenação e exportação CSV.
+
+## Funções de negócio
+
+As funções puras de conversão, períodos, filtros e ordenação ficam em `src/utils/`. Somente a conversão demonstrativa é consumida atualmente por `ConverterForm`; as demais não criam componentes ou telas antecipadamente. Os cenários e resultados estão documentados em `docs/FUNCTION_TESTS.md`.

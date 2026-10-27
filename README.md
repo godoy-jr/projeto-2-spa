@@ -14,6 +14,7 @@ Construir uma interface em português que permita converter moedas com dados da 
 - JavaScript e JSX;
 - Componentes e props;
 - Eventos e `useState`;
+- Funções puras e testes automatizados com `node:test`;
 - Vite;
 - CSS Modules e CSS global de base;
 - CSS responsivo;
@@ -33,6 +34,7 @@ Abra no navegador o endereço exibido pelo Vite, normalmente `http://localhost:5
 Para conferir a qualidade do código e gerar a versão de produção:
 
 ```bash
+npm test
 npm run lint
 npm run build
 ```
@@ -59,12 +61,13 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 2. Componentização e props — concluída;
 3. Eventos, formulários e `useState` — concluída;
 4. Lifting State Up e inversão de moedas — concluída;
-5. Integração com a API usando `fetch`, `async/await` e `useEffect`;
-6. Custom hook e tratamento dos estados da requisição;
-7. Histórico e gráfico;
-8. Tabela, filtros e ordenação;
-9. Exportação CSV;
-10. Revisão, testes, documentação e publicação.
+5. Funções de negócio e processamento — concluída;
+6. Integração com a API usando `fetch`, `async/await` e `useEffect`;
+7. Custom hook e tratamento dos estados da requisição;
+8. Histórico e gráfico;
+9. Tabela, filtros e ordenação;
+10. Exportação CSV;
+11. Revisão, testes, documentação e publicação.
 
 ## Entregáveis e pendências
 

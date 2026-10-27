@@ -7,6 +7,7 @@ Foi utilizada inteligência artificial como apoio às seguintes atividades efeti
 - planejamento e interpretação dos requisitos confirmados no Notion;
 - implementação inicial e componentização da interface React;
 - criação da conversão demonstrativa e correção de sua fórmula;
+- extração das funções puras de negócio e elaboração dos testes automatizados correspondentes;
 - migração dos estilos específicos para CSS Modules;
 - elaboração e atualização da documentação do projeto;
 - apoio a testes manuais no navegador;
