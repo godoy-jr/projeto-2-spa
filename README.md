@@ -2,7 +2,9 @@
 
 Single Page Application acadêmica para conversão e análise de moedas. O projeto será desenvolvido de forma incremental com React, Vite e JavaScript.
 
-> Status atual: conversor, histórico, gráfico, tabela, filtros, ordenação e CSV implementados com dados da Frankfurter v2. Os fluxos especificados abaixo foram revisados no navegador; a publicação permanece pendente.
+> Status atual: conversor, histórico, gráfico, tabela, filtros, ordenação e CSV implementados com dados da Frankfurter v2 e publicados no GitHub Pages. Os fluxos especificados abaixo foram revisados no navegador.
+
+**Aplicação publicada:** [https://godoy-jr.github.io/projeto-2-spa/](https://godoy-jr.github.io/projeto-2-spa/)
 
 ## Objetivo
 
@@ -71,13 +73,13 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 9. Histórico e gráfico — concluída;
 10. Tabela, filtros e ordenação — concluída;
 11. Exportação CSV — concluída;
-12. Revisão, testes e documentação — concluída para os fluxos registrados; publicação e verificações manuais não executadas continuam pendentes.
+12. Revisão, testes, documentação e publicação — concluída para os fluxos registrados; verificações manuais não executadas continuam indicadas como pendentes.
 
 ## Entregáveis e pendências
 
-- [ ] Repositório público no GitHub;
-- [ ] Aplicação publicada e funcionando;
-- [ ] Documentação final do projeto;
+- [x] Repositório público no GitHub;
+- [x] [Aplicação publicada e funcionando](https://godoy-jr.github.io/projeto-2-spa/);
+- [x] Documentação final do projeto;
 - [x] Wireframes, protótipos e exemplos navegáveis desktop/mobile criados no Figma;
 - [ ] Percurso completo do Figma conferido no modo de apresentação;
 - [x] Collection da Frankfurter v2 criada e executada no Postman, com os resultados documentados em `docs/API_TESTS.md`;
@@ -91,8 +93,9 @@ Consulte o estado verificável da entrega em [`docs/DELIVERY_CHECKLIST.md`](docs
 - lint concluído sem erros ou avisos;
 - build de produção concluído;
 - revisão independente confirmou os oito períodos, gráfico mobile, filtro de cotação, contagem, ordenação decrescente, CSV correspondente às linhas visíveis, bloqueio da exportação vazia e validação de mínimo maior que máximo;
+- na aplicação publicada, foram testadas a conversão real e o histórico de sete dias;
 - outros fluxos não cobertos por essa revisão não são considerados verificados;
-- aplicação ainda não publicada.
+- GitHub Actions concluído com sucesso na tentativa 2 da execução `40588883001`, e a URL pública respondeu corretamente.
 
 ## Fonte dos dados
 
