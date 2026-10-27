@@ -1,0 +1,382 @@
+{
+  "info": {
+    "_postman_id": "f2b4cd7c-9f05-4c4e-8d22-9c3dcf5b66d1",
+    "name": "Câmbio Fácil - Frankfurter API v2",
+    "description": "Collection preparada para investigar a API Frankfurter v2 antes da integração com o React. Os testes foram baseados na documentação oficial e em respostas HTTP observadas fora do Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.frankfurter.dev",
+      "type": "string"
+    },
+    {
+      "key": "baseCurrency",
+      "value": "EUR",
+      "type": "string"
+    },
+    {
+      "key": "quoteCurrency",
+      "value": "USD",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Moedas",
+      "item": [
+        {
+          "name": "Listar moedas ativas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/currencies",
+            "description": "Lista as moedas disponíveis no escopo padrão."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Resposta é uma lista não vazia', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "pm.test('BRL, EUR e USD estão disponíveis', () => {",
+                  "  const codes = pm.response.json().map(item => item.iso_code);",
+                  "  pm.expect(codes).to.include.members(['BRL', 'EUR', 'USD']);",
+                  "});",
+                  "pm.test('Moedas possuem metadados esperados', () => {",
+                  "  const item = pm.response.json()[0];",
+                  "  pm.expect(item).to.have.all.keys('iso_code', 'iso_numeric', 'name', 'symbol', 'start_date', 'end_date');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar moedas incluindo legadas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/currencies?scope=all",
+            "description": "Inclui moedas históricas/legadas no catálogo."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Escopo completo retorna lista não vazia com estrutura válida', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.be.an('array').that.is.not.empty;",
+                  "  pm.expect(data[0]).to.have.all.keys('iso_code', 'iso_numeric', 'name', 'symbol', 'start_date', 'end_date');",
+                  "  pm.expect(data.map(item => item.iso_code)).to.include.members(['BRL', 'EUR', 'USD']);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Taxas",
+      "item": [
+        {
+          "name": "Consultar taxa mais recente EUR para USD",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rate/{{baseCurrency}}/{{quoteCurrency}}",
+            "description": "Retorna uma única taxa e sua data efetiva."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Estrutura da taxa é válida', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.have.all.keys('date', 'base', 'quote', 'rate');",
+                  "  pm.expect(data.base).to.eql(pm.collectionVariables.get('baseCurrency'));",
+                  "  pm.expect(data.quote).to.eql(pm.collectionVariables.get('quoteCurrency'));",
+                  "  pm.expect(data.rate).to.be.a('number').and.above(0);",
+                  "  pm.expect(data.date).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar histórico de maio de 2024",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?from=2024-05-01&to=2024-05-31&base={{baseCurrency}}&quotes={{quoteCurrency}}",
+            "description": "Consulta o intervalo indicado no Notion."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retorna série cronológica de maio', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.be.an('array').that.is.not.empty;",
+                  "  pm.expect(data[0].date).to.eql('2024-05-01');",
+                  "  pm.expect(data[data.length - 1].date).to.eql('2024-05-31');",
+                  "  pm.expect(data.every((row, index) => index === 0 || row.date >= data[index - 1].date)).to.be.true;",
+                  "});",
+                  "pm.test('Cada registro possui data, base, quote e taxa positiva', () => {",
+                  "  const expectedBase = pm.collectionVariables.get('baseCurrency');",
+                  "  const expectedQuote = pm.collectionVariables.get('quoteCurrency');",
+                  "  pm.expect(pm.response.json().every(row => row.date && row.base === expectedBase && row.quote === expectedQuote && typeof row.rate === 'number' && row.rate > 0)).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar sábado no feed mesclado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?date=2024-05-04&base=EUR&quotes=USD",
+            "description": "Verifica o comportamento do feed v2 mesclado em um sábado."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Feed mesclado retorna o sábado solicitado', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.be.an('array').with.lengthOf(1);",
+                  "  pm.expect(data[0].date).to.eql('2024-05-04');",
+                  "  pm.expect(data[0].rate).to.be.a('number').and.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar sábado diretamente no ECB",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/providers/ecb/rates?date=2024-05-04&base=EUR&quotes=USD",
+            "description": "Compara a publicação efetiva do ECB com o feed mesclado."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('ECB retorna a última publicação efetiva', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.be.an('array').with.lengthOf(1);",
+                  "  pm.expect(data[0].date).to.eql('2024-05-03');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar intervalo de fim de semana",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?from=2024-05-04&to=2024-05-05&base=EUR&quotes=USD",
+            "description": "Verifica sábado e domingo no feed v2 mesclado."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Feed mesclado retorna sábado e domingo', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.be.an('array').with.lengthOf(2);",
+                  "  pm.expect(data.map(row => row.date)).to.eql(['2024-05-04', '2024-05-05']);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar data fora da cobertura",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?date=1900-01-01&base=EUR&quotes=USD",
+            "description": "Verifica uma data anterior à cobertura do par."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Sem dados retorna lista vazia', () => pm.expect(pm.response.json()).to.eql([]));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar data futura sem publicação",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?date=2099-01-01&base=EUR&quotes=USD",
+            "description": "Verifica uma data futura sem publicação disponível."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Data futura sem dados retorna lista vazia', () => pm.expect(pm.response.json()).to.eql([]));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Erros e limites",
+      "item": [
+        {
+          "name": "Moeda inválida",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rate/INVALID/USD"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 422', () => pm.response.to.have.status(422));",
+                  "pm.test('Erro possui status e mensagem', () => {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data.status).to.eql(422);",
+                  "  pm.expect(data.message).to.include('invalid currency');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Data inválida",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?date=2024-99-99&base=EUR&quotes=USD"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 422', () => pm.response.to.have.status(422));",
+                  "pm.test('Mensagem informa data inválida', () => pm.expect(pm.response.json().message).to.eql('invalid date'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Parâmetro v1 não aceito na v2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?base=EUR&symbols=USD"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 422', () => pm.response.to.have.status(422));",
+                  "pm.test('Mensagem identifica parâmetro desconhecido', () => pm.expect(pm.response.json().message).to.include('unknown parameter'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Intervalo invertido",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/rates?from=2024-05-31&to=2024-05-01&base=EUR&quotes=USD"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200 observado', () => pm.response.to.have.status(200));",
+                  "pm.test('Intervalo invertido retorna lista vazia', () => pm.expect(pm.response.json()).to.eql([]));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Rota inexistente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v2/does-not-exist"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Mensagem not found', () => pm.expect(pm.response.json().message).to.eql('not found'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

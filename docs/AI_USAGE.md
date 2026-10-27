@@ -28,6 +28,7 @@ Os layouts resultantes permanecem estáticos e ainda não possuem navegação in
 - tomou as decisões sobre o escopo e autorizou as alterações e os registros no Git;
 - criou e manteve o arquivo real do projeto no Figma com apoio de IA;
 - participou da conferência do comportamento da aplicação e da revisão dos resultados.
+- executou no Postman, com orientação assistida, a Collection preparada para investigar a API Frankfurter v2 e forneceu o resumo da execução.
 
 ### Assistente de acompanhamento
 

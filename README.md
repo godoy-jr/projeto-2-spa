@@ -73,7 +73,7 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 - [ ] Documentação final do projeto;
 - [x] Wireframes e protótipos estáticos criados no Figma;
 - [ ] Navegação interativa configurada no Figma;
-- [ ] Collection criada no Postman;
+- [x] Collection da Frankfurter v2 criada e executada no Postman, com os resultados documentados em `docs/API_TESTS.md`;
 - [ ] Histórico real de commits incrementais.
 
 ## Fonte dos dados
