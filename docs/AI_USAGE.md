@@ -52,3 +52,7 @@ Os layouts resultantes permanecem estáticos e ainda não possuem navegação in
 - o auxílio de IA não comprova implementação, testes ou funcionamento das funcionalidades;
 - os testes manuais assistidos complementam, mas não substituem, testes automatizados futuros;
 - este registro não atribui à IA atividades, ferramentas, prompts ou datas que não tenham sido confirmados.
+
+## Camada de serviço v2
+
+O assistente de acompanhamento implementou a camada de serviço e seus testes determinísticos com fetch simulado, consultando a documentação oficial e a Collection existente. Também documentou os contratos, erros e moedas iguais. Não realizou consultas reais de cotações nesta etapa nem conectou os serviços ao React. Não houve commit ou push.

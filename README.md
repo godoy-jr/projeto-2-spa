@@ -62,7 +62,7 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 3. Eventos, formulários e `useState` — concluída;
 4. Lifting State Up e inversão de moedas — concluída;
 5. Funções de negócio e processamento — concluída;
-6. Integração com a API usando `fetch`, `async/await` e `useEffect`;
+6. Camada de serviço com `fetch` e `async/await` — implementada e testada isoladamente; conexão aos componentes e `useEffect` pendentes;
 7. Custom hook e tratamento dos estados da requisição;
 8. Histórico e gráfico;
 9. Tabela, filtros e ordenação;
@@ -82,3 +82,7 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 ## Fonte dos dados
 
 Quando a integração for implementada, as cotações reais virão da API Frankfurter. Até lá, todo valor mostrado na interface está identificado como demonstrativo e não deve ser interpretado como uma cotação atual.
+
+## Camada de serviço preparada
+
+As consultas de moedas, taxa e histórico estão em src/services/frankfurter.js, com validação e cancelamento. Ainda não são usadas pela interface. Contratos e testes: [docs/SERVICES.md](docs/SERVICES.md).

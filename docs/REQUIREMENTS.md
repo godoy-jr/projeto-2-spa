@@ -269,3 +269,5 @@ A API Frankfurter v2 foi investigada por requisições HTTP, e a Collection regi
 As funções puras de conversão direta e demonstrativa, cálculo dos oito períodos históricos, filtros combinados e ordenação foram implementadas em `src/utils/` e verificadas com testes automatizados. Somente a função demonstrativa está conectada ao conversor atual; as demais permanecem preparadas para etapas futuras, conforme registrado em `docs/FUNCTION_TESTS.md`.
 
 A conversão existente no código usa taxas fictícias claramente identificadas e serve apenas para aprendizado. Ela não comprova a integração com a API nem atende, por si só, aos critérios de aceite das cotações reais.
+
+A camada de serviço v2 foi preparada com fetch e async/await, validação e suporte a AbortSignal. Ela permanece independente e desconectada dos componentes. Os contratos e o tratamento de moedas iguais estão em docs/SERVICES.md; integração visual, efeitos e custom hook continuam pendentes.

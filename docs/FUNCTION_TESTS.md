@@ -80,3 +80,14 @@ O projeto usa o executor nativo `node:test`, executado nesta etapa com Node `v24
 - `npm run build`: concluído com sucesso, 28 módulos transformados.
 
 O build criou `dist/` apenas como saída local de verificação. Essa pasta permanece ignorada e não faz parte das alterações do projeto.
+
+## Verificação da camada de serviço v2
+
+A camada src/services/frankfurter.js está preparada, mas não conectada ao React. Os contratos estão em docs/SERVICES.md e os testes em test/frankfurter.test.js.
+
+Resultados efetivamente executados nesta etapa:
+- npm test: 37 aprovados (21 de negócio e 16 de serviço), zero falhas e zero ignorados;
+- npm run lint: aprovado;
+- npm run build: aprovado, 28 módulos transformados.
+
+Todos os testes de serviço usam fetch simulado; nenhuma consulta HTTP real foi executada nesta etapa. O primeiro build foi impedido por permissão de gravação de temporários e passou ao ser reexecutado com essa permissão. Nenhuma dependência foi adicionada e dist continua sendo apenas saída local ignorada.
