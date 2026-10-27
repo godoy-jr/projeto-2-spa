@@ -2,7 +2,7 @@
 
 Single Page Application acadêmica para conversão e análise de moedas. O projeto será desenvolvido de forma incremental com React, Vite e JavaScript.
 
-> Status atual: formulário interativo com eventos e estado local. A aplicação ainda não consulta cotações reais.
+> Status atual: formulário interativo com estado local, par de moedas compartilhado e inversão por callback. A aplicação ainda não consulta cotações reais.
 
 ## Objetivo
 
@@ -58,7 +58,7 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 1. Preparação, JSX e interface estática — concluída;
 2. Componentização e props — concluída;
 3. Eventos, formulários e `useState` — concluída;
-4. Lifting State Up;
+4. Lifting State Up e inversão de moedas — concluída;
 5. Integração com a API usando `fetch`, `async/await` e `useEffect`;
 6. Custom hook e tratamento dos estados da requisição;
 7. Histórico e gráfico;

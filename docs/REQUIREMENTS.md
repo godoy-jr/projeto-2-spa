@@ -254,9 +254,8 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 - estudar a API Frankfurter no Postman e salvar a Collection;
 - documentar os testes da API em `docs/API_TESTS.md`;
 - documentar funções e testes em `docs/FUNCTION_TESTS.md`;
-- implementar Lifting State Up;
 - implementar integração real com a API, `useEffect` e custom hook;
-- implementar inversão, taxa e data efetiva;
+- implementar taxa e data efetiva com os dados reais da API;
 - implementar histórico, gráfico, tabela, filtros e ordenação;
 - implementar exportação CSV;
 - revisar testes, responsividade e todos os estados da aplicação;
@@ -264,7 +263,7 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 
 ## 10. Situação atual
 
-A versão atual possui interface React componentizada, props, listas com `map`, eventos e estado local com `useState`. Os estilos específicos foram separados em CSS Modules e a estrutura real está documentada em `docs/COMPONENTS.md`.
+A versão atual possui interface React componentizada, props, listas com `map`, eventos e `useState`. O par de moedas foi elevado para `App` por Lifting State Up e é compartilhado com `ConverterForm` e `HistorySection`. O formulário permite alterar ou inverter o par por callbacks, preserva o valor informado e limpa feedback anterior quando o par muda. Os estilos específicos foram separados em CSS Modules e a estrutura real está documentada em `docs/COMPONENTS.md`.
 
 O Figma do projeto possui wireframes de baixa fidelidade e layouts de média fidelidade para desktop e mobile, incluindo os estados de sucesso, carregamento, erro, ausência de dados e validação. Esses layouts são editáveis, porém estáticos e ainda não possuem navegação interativa. O link e as limitações estão registrados em `docs/FIGMA.md`, e o auxílio de IA está registrado em `docs/AI_USAGE.md`.
 

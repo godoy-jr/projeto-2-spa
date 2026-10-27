@@ -1,12 +1,23 @@
 import { useState } from 'react'
 import styles from './ConverterForm.module.css'
 
-function ConverterForm({ currencies, demoRates }) {
+function ConverterForm({
+  currencies,
+  demoRates,
+  sourceCode,
+  targetCode,
+  onSourceChange,
+  onTargetChange,
+  onInvertCurrencies,
+}) {
   const [amount, setAmount] = useState('')
-  const [sourceCode, setSourceCode] = useState('EUR')
-  const [targetCode, setTargetCode] = useState('BRL')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
+
+  function resetFeedback() {
+    setResult(null)
+    setError('')
+  }
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -25,9 +36,14 @@ function ConverterForm({ currencies, demoRates }) {
     setResult(convertedAmount)
   }
 
-  function handleCurrencyChange(setCurrency, value) {
-    setCurrency(value)
-    setResult(null)
+  function handleCurrencyChange(onChange, value) {
+    onChange(value)
+    resetFeedback()
+  }
+
+  function handleInvert() {
+    onInvertCurrencies()
+    resetFeedback()
   }
 
   return (
@@ -51,7 +67,7 @@ function ConverterForm({ currencies, demoRates }) {
             value={amount}
             onChange={(event) => {
               setAmount(event.target.value)
-              setResult(null)
+              resetFeedback()
             }}
           />
         </div>
@@ -62,7 +78,7 @@ function ConverterForm({ currencies, demoRates }) {
             id="from-currency"
             name="from-currency"
             value={sourceCode}
-            onChange={(event) => handleCurrencyChange(setSourceCode, event.target.value)}
+            onChange={(event) => handleCurrencyChange(onSourceChange, event.target.value)}
           >
             {currencies.map((currency) => (
               <option key={currency.code} value={currency.code}>
@@ -72,7 +88,10 @@ function ConverterForm({ currencies, demoRates }) {
           </select>
         </div>
 
-        <span className={styles.exchangeIcon} aria-hidden="true">→</span>
+        <button className={styles.invertButton} type="button" onClick={handleInvert}>
+          <span aria-hidden="true">⇄</span>
+          <span>Inverter moedas</span>
+        </button>
 
         <div className={styles.field}>
           <label htmlFor="to-currency">Moeda de destino</label>
@@ -80,7 +99,7 @@ function ConverterForm({ currencies, demoRates }) {
             id="to-currency"
             name="to-currency"
             value={targetCode}
-            onChange={(event) => handleCurrencyChange(setTargetCode, event.target.value)}
+            onChange={(event) => handleCurrencyChange(onTargetChange, event.target.value)}
           >
             {currencies.map((currency) => (
               <option key={currency.code} value={currency.code}>
@@ -90,7 +109,7 @@ function ConverterForm({ currencies, demoRates }) {
           </select>
         </div>
 
-        <button type="submit">Converter</button>
+        <button className={styles.submitButton} type="submit">Converter</button>
 
         <div className={styles.formFeedback} aria-live="polite">
           <p className={styles.formNote}>Taxas fictícias para fins didáticos — não representam a cotação atual.</p>

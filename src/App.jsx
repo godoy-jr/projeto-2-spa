@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styles from './App.module.css'
 import ConverterForm from './components/ConverterForm'
 import Footer from './components/Footer'
@@ -23,6 +24,14 @@ const demoRates = {
 }
 
 function App() {
+  const [sourceCode, setSourceCode] = useState('EUR')
+  const [targetCode, setTargetCode] = useState('BRL')
+
+  function handleInvertCurrencies() {
+    setSourceCode(targetCode)
+    setTargetCode(sourceCode)
+  }
+
   return (
     <div className={styles.appShell}>
       <Header brandName="Câmbio Fácil" navigationItems={navigationItems} />
@@ -33,8 +42,16 @@ function App() {
           description="Converta valores e acompanhe a variação das moedas em uma experiência simples e direta."
           exampleRate="1 EUR = 6,20 BRL"
         />
-        <ConverterForm currencies={currencies} demoRates={demoRates} />
-        <HistorySection description="O gráfico, os filtros, a ordenação e a exportação CSV serão construídos progressivamente e testados em etapas próprias." />
+        <ConverterForm
+          currencies={currencies}
+          demoRates={demoRates}
+          sourceCode={sourceCode}
+          targetCode={targetCode}
+          onSourceChange={setSourceCode}
+          onTargetChange={setTargetCode}
+          onInvertCurrencies={handleInvertCurrencies}
+        />
+        <HistorySection sourceCode={sourceCode} targetCode={targetCode} />
       </main>
 
       <Footer dataSource="API Frankfurter" />
