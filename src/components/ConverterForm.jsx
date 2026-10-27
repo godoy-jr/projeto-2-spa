@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { getLatestRate } from '../services/frankfurter'
+import { useState } from 'react'
+import { useExchangeRate } from '../hooks/useExchangeRate'
 import { convertWithDirectRate } from '../utils/conversion'
 import styles from './ConverterForm.module.css'
 
@@ -18,80 +18,17 @@ function ConverterForm({
   const [amount, setAmount] = useState('')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
-  const [quoteState, setQuoteState] = useState({
-    pairKey: '',
-    requestToken: '',
-    status: 'idle',
-    data: null,
-    error: '',
+  const {
+    quote,
+    status: quoteStatus,
+    error: quoteError,
+    retry: retryQuote,
+  } = useExchangeRate({
+    sourceCode,
+    targetCode,
+    pairRevision,
+    enabled: currenciesStatus === 'success',
   })
-  const [quoteRequest, setQuoteRequest] = useState(0)
-  const latestRequest = useRef(0)
-  const pairKey = `${sourceCode}/${targetCode}`
-  const requestToken = `${pairRevision}/${quoteRequest}`
-
-  useEffect(() => {
-    const requestId = latestRequest.current + 1
-    latestRequest.current = requestId
-    const controller = new AbortController()
-    let active = true
-
-    if (currenciesStatus !== 'success' || !sourceCode || !targetCode) {
-      return () => controller.abort()
-    }
-
-    if (sourceCode === targetCode) {
-      return () => controller.abort()
-    }
-
-    async function loadQuote() {
-      try {
-        const data = await getLatestRate(sourceCode, targetCode, { signal: controller.signal })
-        if (!active || latestRequest.current !== requestId) return
-
-        if (data === null) {
-          setQuoteState({ pairKey, requestToken, status: 'empty', data: null, error: '' })
-          return
-        }
-
-        setQuoteState({ pairKey, requestToken, status: 'success', data, error: '' })
-      } catch (requestError) {
-        if (!active || latestRequest.current !== requestId || requestError.name === 'AbortError') return
-
-        if (requestError.status === 404) {
-          setQuoteState({ pairKey, requestToken, status: 'empty', data: null, error: '' })
-          return
-        }
-
-        setQuoteState({
-          pairKey,
-          requestToken,
-          status: 'error',
-          data: null,
-          error: 'Não foi possível carregar a cotação. Tente novamente.',
-        })
-      }
-    }
-
-    loadQuote()
-
-    return () => {
-      active = false
-      controller.abort()
-    }
-  }, [currenciesStatus, pairKey, requestToken, sourceCode, targetCode])
-
-  let quoteStatus = quoteState.status
-  if (currenciesStatus !== 'success' || !sourceCode || !targetCode) {
-    quoteStatus = 'idle'
-  } else if (sourceCode === targetCode) {
-    quoteStatus = 'identity'
-  } else if (quoteState.pairKey !== pairKey || quoteState.requestToken !== requestToken) {
-    quoteStatus = 'loading'
-  }
-
-  const quote = quoteStatus === 'success' ? quoteState.data : null
-  const quoteError = quoteStatus === 'error' ? quoteState.error : ''
   const formattedRate = quote?.rate.toLocaleString('pt-BR', {
     minimumFractionDigits: 4,
     maximumFractionDigits: 6,
@@ -230,13 +167,13 @@ function ConverterForm({
           {quoteStatus === 'empty' && (
             <div className={styles.emptyPanel}>
               <p>Nenhuma cotação disponível para este par.</p>
-              <button type="button" onClick={() => setQuoteRequest((current) => current + 1)}>Consultar novamente</button>
+              <button type="button" onClick={retryQuote}>Consultar novamente</button>
             </div>
           )}
           {quoteStatus === 'error' && (
             <div className={styles.errorPanel} role="alert">
               <p>{quoteError}</p>
-              <button type="button" onClick={() => setQuoteRequest((current) => current + 1)}>Tentar novamente</button>
+              <button type="button" onClick={retryQuote}>Tentar novamente</button>
             </div>
           )}
           {quoteStatus === 'success' && quote && (

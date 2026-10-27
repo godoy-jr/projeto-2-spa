@@ -29,7 +29,7 @@ Os códigos de entrada são normalizados para maiúsculas; as datas usam `YYYY-M
 | `NETWORK` | Falha no fetch ou interrupção ao ler a resposta |
 | `INVALID_RESPONSE` | JSON inválido ou dados incompatíveis com o contrato |
 
-Cancelamentos são propagados sem virar erro HTTP/rede, tanto antes da chamada quanto durante fetch e leitura do corpo. Os efeitos atuais encaminham o `signal`, cancelam consultas substituídas e verificam a identidade da requisição antes de aceitar uma resposta. O estado da taxa também é associado ao par, à revisão e à tentativa atual.
+Cancelamentos são propagados sem virar erro HTTP/rede, tanto antes da chamada quanto durante fetch e leitura do corpo. O hook `useExchangeRate` encaminha o `signal`, cancela consultas substituídas e verifica a identidade da requisição antes de aceitar uma resposta. O estado da taxa também é associado ao par, à revisão e à tentativa atual.
 
 ## Integração atual
 
@@ -38,7 +38,9 @@ Cancelamentos são propagados sem virar erro HTTP/rede, tanto antes da chamada q
 - HTTP `404` na taxa é apresentado como ausência de dados;
 - o resultado usa `valor × taxa` e mostra a data efetiva recebida;
 - controles do par são preservados, incluindo inversão e o valor digitado;
-- a lógica permanece diretamente nos componentes nesta etapa; o custom hook ainda não foi criado.
+- a consulta de taxa e seus estados foram extraídos para `src/hooks/useExchangeRate.js`;
+- o catálogo de moedas continua no `useEffect` de `App` e não foi incluído no hook de taxa.
+- os testes do hook injetam um serviço simulado por `requestRate` e não realizam chamadas HTTP.
 
 ## Testes
 

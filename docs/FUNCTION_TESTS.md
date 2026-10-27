@@ -103,3 +103,23 @@ Após conectar catálogo e taxa aos componentes, foram executados:
 Os testes automatizados continuam cobrindo funções e serviço com fetch simulado; não foi adicionada biblioteca de teste de componentes. Em revisão independente no navegador, foram confirmados: conversão com dados reais, inversão, preservação do valor informado, moedas iguais sem taxa/data, entradas inválidas e troca rápida do par sem exibir resultado antigo. Esse registro não amplia a evidência para outros cenários.
 
 Como verificação HTTP separada dos testes automatizados e do Postman, as próprias funções do serviço consultaram a instância pública nesta execução: o catálogo retornou 170 moedas, incluindo BRL e EUR, e `getLatestRate('EUR', 'BRL')` retornou `{"date":"2026-10-27","base":"EUR","quote":"BRL","rate":5.9696}`. O servidor Vite local respondeu `200` e entregou o ponto de montagem e o módulo principal. Essas verificações confirmam conectividade e disponibilidade local, mas não substituem a revisão visual no navegador.
+
+## Verificação da extração para custom hook
+
+A consulta de taxa foi movida de `ConverterForm` para `src/hooks/useExchangeRate.js` sem alterar o contrato exibido pelo formulário. Depois da extração, foram executados:
+
+- `npm test`: 44 testes aprovados, 0 falhas e 0 ignorados;
+- `npm run lint`: concluído sem erros ou avisos;
+- `npm run build`: concluído com sucesso, 30 módulos transformados.
+
+`test/useExchangeRate.test.js` usa Testing Library e `jsdom` para renderizar o hook. O serviço é injetado e simulado; esses sete testes não acessam a rede real. Foram cobertos:
+
+- sucesso;
+- erro seguido de nova tentativa bem-sucedida;
+- cancelamento ao trocar o par;
+- descarte de resposta atrasada;
+- sequência A → B → A sem reaproveitar a resposta da primeira revisão de A;
+- moedas iguais sem chamada ao serviço;
+- cancelamento ao desmontar durante uma consulta.
+
+A primeira tentativa com `react-test-renderer` foi descartada por emitir aviso de descontinuação. A versão final usa `@testing-library/react` e `jsdom`; o pacote descontinuado não permanece nas dependências.

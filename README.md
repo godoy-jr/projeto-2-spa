@@ -16,6 +16,7 @@ Construir uma interface em português que permita converter moedas com dados da 
 - Eventos e `useState`;
 - `useEffect`, `fetch` e `async/await`;
 - Funções puras e testes automatizados com `node:test`;
+- Testes de hooks com Testing Library e `jsdom`;
 - Vite;
 - CSS Modules e CSS global de base;
 - CSS responsivo;
@@ -65,7 +66,7 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 5. Funções de negócio e processamento — concluída;
 6. Camada de serviço com `fetch` e `async/await` — concluída;
 7. Conversor com moedas e taxas reais usando `useEffect` — concluída;
-8. Custom hook reutilizável;
+8. Custom hook reutilizável para taxa — implementado localmente e em revisão;
 9. Histórico e gráfico;
 10. Tabela, filtros e ordenação;
 11. Exportação CSV;
