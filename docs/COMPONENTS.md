@@ -61,8 +61,8 @@ main.jsx
 
 ## Pendências fora desta etapa
 
-- navegação interativa e revisão visual final dos layouts do Figma;
-- revisão final de acessibilidade, responsividade e publicação.
+- percurso completo dos dois fluxos do Figma no modo de apresentação;
+- revisão dos fluxos de acessibilidade e responsividade ainda não cobertos pelas verificações registradas, além da publicação.
 
 ## Funções de negócio
 

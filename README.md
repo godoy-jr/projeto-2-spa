@@ -2,7 +2,7 @@
 
 Single Page Application acadêmica para conversão e análise de moedas. O projeto será desenvolvido de forma incremental com React, Vite e JavaScript.
 
-> Status atual: conversor, histórico, gráfico, tabela, filtros, ordenação e CSV implementados com dados da Frankfurter v2. Publicação e revisão visual final permanecem pendentes.
+> Status atual: conversor, histórico, gráfico, tabela, filtros, ordenação e CSV implementados com dados da Frankfurter v2. Os fluxos especificados abaixo foram revisados no navegador; a publicação permanece pendente.
 
 ## Objetivo
 
@@ -56,7 +56,7 @@ Os requisitos funcionais e não funcionais estão consolidados em `docs/REQUIREM
 
 ## Prototipação
 
-O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7ymi) contém wireframes de baixa fidelidade, layouts de média fidelidade e estados para desktop e mobile. Os layouts são editáveis, mas ainda estáticos e sem navegação interativa. Consulte `docs/FIGMA.md` para o registro completo e para a diferenciação entre o trabalho do projeto e as referências HERMES fornecidas pelo professor.
+O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7ymi) contém wireframes de baixa fidelidade, layouts de média fidelidade, estados e dois fluxos demonstrativos para desktop e mobile. Os exemplos são navegáveis entre frames, mas não executam API, preenchimento de campos ou download real. Consulte `docs/FIGMA.md` para as evidências, limitações e a diferenciação entre o trabalho do projeto e as referências HERMES fornecidas pelo professor.
 
 ## Evolução planejada
 
@@ -71,15 +71,15 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 9. Histórico e gráfico — concluída;
 10. Tabela, filtros e ordenação — concluída;
 11. Exportação CSV — concluída;
-12. Revisão, testes e documentação — concluída tecnicamente; revisão visual final e publicação pendentes.
+12. Revisão, testes e documentação — concluída para os fluxos registrados; publicação e verificações manuais não executadas continuam pendentes.
 
 ## Entregáveis e pendências
 
 - [ ] Repositório público no GitHub;
 - [ ] Aplicação publicada e funcionando;
 - [ ] Documentação final do projeto;
-- [x] Wireframes e protótipos estáticos criados no Figma;
-- [ ] Navegação interativa configurada no Figma;
+- [x] Wireframes, protótipos e exemplos navegáveis desktop/mobile criados no Figma;
+- [ ] Percurso completo do Figma conferido no modo de apresentação;
 - [x] Collection da Frankfurter v2 criada e executada no Postman, com os resultados documentados em `docs/API_TESTS.md`;
 - [x] Histórico real de commits incrementais.
 
@@ -90,7 +90,8 @@ Consulte o estado verificável da entrega em [`docs/DELIVERY_CHECKLIST.md`](docs
 - 56 testes automatizados aprovados;
 - lint concluído sem erros ou avisos;
 - build de produção concluído;
-- revisão visual final do gráfico, tabela e CSV pendente nesta sessão;
+- revisão independente confirmou os oito períodos, gráfico mobile, filtro de cotação, contagem, ordenação decrescente, CSV correspondente às linhas visíveis, bloqueio da exportação vazia e validação de mínimo maior que máximo;
+- outros fluxos não cobertos por essa revisão não são considerados verificados;
 - aplicação ainda não publicada.
 
 ## Fonte dos dados

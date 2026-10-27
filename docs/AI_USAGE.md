@@ -19,7 +19,7 @@ Na prototipação, o auxílio abrangeu:
 - protótipos de média fidelidade para desktop e mobile;
 - representação dos estados de sucesso, carregamento, erro, ausência de dados e validação.
 
-Os layouts resultantes permanecem estáticos e ainda não possuem navegação interativa.
+Os layouts foram posteriormente complementados, pelo assistente de acompanhamento, com dois fluxos demonstrativos desktop/mobile. As conexões navegam entre exemplos de frames; não executam API, preenchimento funcional ou download real.
 
 ## Participação na colaboração
 
@@ -36,6 +36,7 @@ Os layouts resultantes permanecem estáticos e ainda não possuem navegação in
 - consultou o Notion e recuperou a sequência confirmada das etapas e os requisitos do projeto;
 - apoiou o planejamento e a interpretação do escopo;
 - outro assistente desta mesma colaboração conferiu, pela integração do Figma, as camadas editáveis, as versões desktop/mobile e as prévias visuais.
+- o assistente de acompanhamento acrescentou dois fluxos desktop/mobile, telas iniciais e exemplos de filtros aplicados; pela integração, verificou 82 conexões e seus 82 destinos. O percurso completo no modo de apresentação não foi testado.
 
 ### Assistente responsável pelas alterações locais desta etapa
 
@@ -67,4 +68,4 @@ O assistente implementou também o hook histórico, a seleção dos oito períod
 
 O assistente conectou a tabela aos utilitários já testados, implementou a geração e o download do CSV e adicionou testes automatizados de conteúdo, caracteres especiais, nome de arquivo, lista vazia e ciclo da URL temporária. Não foi atribuída aos testes automatizados evidência de download visual no navegador.
 
-Na revisão final, o assistente consolidou documentação e evidências, tentou acessar o Figma e o navegador local e registrou as limitações encontradas. Não marcou como concluídas a revisão visual final, o download real do CSV, o acesso atual do avaliador ao Figma ou a publicação.
+Na revisão final, o assistente consolidou documentação e evidências, tentou acessar o Figma e o navegador local e registrou as limitações encontradas. Posteriormente, uma revisão independente no navegador confirmou especificamente os oito períodos, o gráfico mobile, o filtro de cotação, a contagem, a ordenação decrescente, o download do CSV correspondente às linhas visíveis, o bloqueio da exportação vazia e a validação de mínimo maior que máximo. Este registro não generaliza a verificação para outros fluxos. A publicação continua pendente.

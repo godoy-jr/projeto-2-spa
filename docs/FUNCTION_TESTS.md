@@ -151,4 +151,4 @@ Resultados após integrar tabela e exportação:
 - `npm run lint`: concluído sem erros ou avisos;
 - `npm run build`: concluído com sucesso, 612 módulos transformados.
 
-Esses testes comprovam processamento e geração do arquivo de forma simulada. O download efetivo pelo navegador e a apresentação visual da tabela permanecem para a revisão final.
+Esses testes comprovam processamento e geração do arquivo de forma simulada. Em revisão independente posterior no navegador, foram confirmados especificamente os oito períodos, gráfico mobile, filtro de cotação, contagem, ordenação decrescente, download do CSV correspondente às linhas visíveis, bloqueio da exportação vazia e validação de mínimo maior que máximo. Não foram fornecidas evidências para generalizar essa revisão a todos os filtros, sentidos de ordenação, tamanhos de tela ou estados.

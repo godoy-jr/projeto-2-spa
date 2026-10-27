@@ -250,15 +250,15 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 
 ## 9. Pendências conhecidas
 
-- configurar a navegação interativa entre os layouts do Figma e realizar uma revisão visual final do arquivo;
-- revisar visualmente desktop, mobile, gráfico, tabela, CSV e todos os estados da versão final;
+- executar e conferir o percurso completo dos dois fluxos do Figma no modo de apresentação;
+- conferir manualmente os fluxos e estados da aplicação que não fizeram parte da revisão independente registrada;
 - publicar a versão final da aplicação.
 
 ## 10. Situação atual
 
 A versão atual possui interface React componentizada, props, listas com `map`, eventos e `useState`. O par de moedas foi elevado para `App` por Lifting State Up e é compartilhado com `ConverterForm` e `HistorySection`. O formulário permite alterar ou inverter o par por callbacks, preserva o valor informado e limpa feedback anterior quando o par muda. Os estilos específicos foram separados em CSS Modules e a estrutura real está documentada em `docs/COMPONENTS.md`.
 
-O Figma do projeto possui wireframes de baixa fidelidade e layouts de média fidelidade para desktop e mobile, incluindo os estados de sucesso, carregamento, erro, ausência de dados e validação. Esses layouts são editáveis, porém estáticos e ainda não possuem navegação interativa. O link e as limitações estão registrados em `docs/FIGMA.md`, e o auxílio de IA está registrado em `docs/AI_USAGE.md`.
+O Figma do projeto possui wireframes de baixa fidelidade e layouts de média fidelidade para desktop e mobile, incluindo os estados de sucesso, carregamento, erro, ausência de dados e validação. O assistente de acompanhamento configurou dois fluxos demonstrativos e verificou estruturalmente 82 conexões e seus destinos. Eles são exemplos navegáveis entre frames, sem API ou download real; o percurso completo no modo de apresentação ainda não foi testado. O link e as limitações estão registrados em `docs/FIGMA.md`, e o auxílio de IA está registrado em `docs/AI_USAGE.md`.
 
 A API Frankfurter v2 foi investigada por requisições HTTP, e a Collection registrada em `postman/Frankfurter-v2.postman_collection.json` foi executada pelo autor no Postman. Os cenários, as observações HTTP e o resumo da execução no Postman estão documentados separadamente em `docs/API_TESTS.md`.
 
@@ -270,4 +270,4 @@ O histórico real aceita os oito períodos obrigatórios, recalcula os limites d
 
 A tabela apresenta data, origem, destino e cotação, com filtros combinados inclusivos, validação, limpeza, ordenação nos dois sentidos e contagem. O CSV contém exatamente a lista filtrada e ordenada, possui cabeçalhos e nome identificável, protege caracteres especiais e é bloqueado quando não há registros.
 
-A suíte automatizada final possui 56 testes aprovados, incluindo funções, serviços, hooks e CSV. Lint e build foram concluídos. Essas verificações não são tratadas como prova visual; a conferência final no navegador e a publicação continuam pendentes conforme `docs/DELIVERY_CHECKLIST.md`.
+A suíte automatizada final possui 56 testes aprovados, incluindo funções, serviços, hooks e CSV. Lint e build foram concluídos. Em revisão independente no navegador, foram confirmados os oito períodos, gráfico mobile, filtro de cotação, contagem, ordenação decrescente, download do CSV correspondente às linhas visíveis, bloqueio de exportação vazia e validação de mínimo maior que máximo. A evidência não é ampliada para fluxos não testados; a publicação continua pendente conforme `docs/DELIVERY_CHECKLIST.md`.
