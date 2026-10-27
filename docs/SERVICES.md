@@ -2,7 +2,7 @@
 
 ## Escopo
 
-`src/services/frankfurter.js` consulta os endpoints v2 da [documentação oficial](https://frankfurter.dev/). A camada não importa React nem acessa o DOM. `App` usa o catálogo e `ConverterForm` usa a taxa mais recente; o histórico ainda não foi conectado.
+`src/services/frankfurter.js` consulta os endpoints v2 da [documentação oficial](https://frankfurter.dev/). A camada não importa React nem acessa o DOM. `App` usa o catálogo, `ConverterForm` usa a taxa mais recente e `HistorySection` usa o histórico por meio dos respectivos hooks.
 
 ## Funções e contratos
 
@@ -41,6 +41,8 @@ Cancelamentos são propagados sem virar erro HTTP/rede, tanto antes da chamada q
 - a consulta de taxa e seus estados foram extraídos para `src/hooks/useExchangeRate.js`;
 - o catálogo de moedas continua no `useEffect` de `App` e não foi incluído no hook de taxa.
 - os testes do hook injetam um serviço simulado por `requestRate` e não realizam chamadas HTTP.
+- `useHistoricalRates` injeta `requestHistory` nos testes, calcula limites inclusivos e não completa datas ausentes;
+- o gráfico recebe diretamente os registros publicados devolvidos pelo serviço histórico.
 
 ## Testes
 

@@ -123,3 +123,14 @@ A consulta de taxa foi movida de `ConverterForm` para `src/hooks/useExchangeRate
 - cancelamento ao desmontar durante uma consulta.
 
 A primeira tentativa com `react-test-renderer` foi descartada por emitir aviso de descontinuação. A versão final usa `@testing-library/react` e `jsdom`; o pacote descontinuado não permanece nas dependências.
+
+## Verificação do histórico e gráfico
+
+Foram adicionados sete testes de `useHistoricalRates` com serviço simulado e sem rede: intervalo inclusivo e sucesso, ausência de dados, erro e nova tentativa, cancelamento ao trocar período, resposta atrasada, sequência A → B → A, moedas iguais e desmontagem. Após a implementação:
+
+- `npm test`: 51 testes aprovados, 0 falhas e 0 ignorados;
+- `npm run lint`: concluído sem erros ou avisos;
+- `npm run build`: concluído com sucesso, 609 módulos transformados;
+- o gráfico foi separado em chunk sob demanda, sem aviso de tamanho excessivo.
+
+Em verificação HTTP real separada dos testes simulados, EUR/BRL de `2026-10-21` a `2026-10-27` retornou sete registros publicados. O primeiro foi `2026-10-21`, taxa `5.6459`, e o último `2026-10-27`, taxa `5.9427`. Essa consulta confirma o serviço e os dados, mas não substitui a revisão visual do gráfico.

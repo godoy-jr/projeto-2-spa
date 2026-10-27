@@ -251,7 +251,7 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 ## 9. Pendências conhecidas
 
 - configurar a navegação interativa entre os layouts do Figma e realizar uma revisão visual final do arquivo;
-- implementar histórico, gráfico, tabela, filtros e ordenação;
+- implementar tabela, filtros e ordenação;
 - implementar exportação CSV;
 - revisar testes, responsividade e todos os estados da aplicação;
 - publicar a versão final da aplicação.
@@ -266,4 +266,6 @@ A API Frankfurter v2 foi investigada por requisições HTTP, e a Collection regi
 
 As funções puras de conversão direta e demonstrativa, cálculo dos oito períodos históricos, filtros combinados e ordenação foram implementadas em `src/utils/` e verificadas com testes automatizados. A conversão direta está conectada ao conversor real; as demais permanecem preparadas para etapas futuras, conforme registrado em `docs/FUNCTION_TESTS.md`.
 
-O conversor carrega moedas e taxa real com `useEffect`, usa `valor × taxa` e mostra a data efetiva. A consulta de taxa foi extraída para `useExchangeRate`. Consultas substituídas são canceladas, e o estado da taxa é vinculado ao par, à revisão e à tentativa atual para impedir a exibição de respostas antigas. Moedas iguais preservam o valor sem taxa ou data inventada. As funcionalidades históricas continuam pendentes.
+O conversor carrega moedas e taxa real com `useEffect`, usa `valor × taxa` e mostra a data efetiva. A consulta de taxa foi extraída para `useExchangeRate`. Consultas substituídas são canceladas, e o estado da taxa é vinculado ao par, à revisão e à tentativa atual para impedir a exibição de respostas antigas. Moedas iguais preservam o valor sem taxa ou data inventada.
+
+O histórico real aceita os oito períodos obrigatórios, recalcula os limites de calendário e atualiza ao mudar o par ou período. `useHistoricalRates` preserva cancelamento e proteção contra respostas antigas. O gráfico responsivo usa somente os registros publicados retornados pela API; moedas iguais e séries vazias não geram dados artificiais.

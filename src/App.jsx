@@ -92,7 +92,12 @@ function App() {
           onTargetChange={handleTargetChange}
           onInvertCurrencies={handleInvertCurrencies}
         />
-        <HistorySection sourceCode={sourceCode} targetCode={targetCode} />
+        <HistorySection
+          sourceCode={sourceCode}
+          targetCode={targetCode}
+          pairRevision={pairRevision}
+          enabled={currenciesStatus === 'success'}
+        />
       </main>
 
       <Footer dataSource="API Frankfurter" />

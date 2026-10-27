@@ -62,3 +62,5 @@ O assistente de acompanhamento implementou a camada de serviço e seus testes de
 O assistente responsável pelas alterações locais conectou o catálogo e a taxa aos componentes com `useEffect`, apoiou a organização dos estados, o cancelamento e a proteção contra respostas obsoletas, removeu a apresentação fictícia e atualizou a documentação. Testes automatizados, lint e build foram executados. O autor informou que uma revisão independente no navegador confirmou conversão real, inversão, preservação do valor, moedas iguais, entradas inválidas e troca rápida do par.
 
 O mesmo assistente extraiu posteriormente a consulta de taxa para `useExchangeRate` e criou testes específicos com serviço simulado para sucesso, erro e nova tentativa, cancelamento, respostas atrasadas, sequência A → B → A, moedas iguais e desmontagem. As verificações do hook não usaram a rede real.
+
+O assistente implementou também o hook histórico, a seleção dos oito períodos e o gráfico responsivo com Recharts, além de testes simulados dos estados assíncronos. Uma consulta HTTP real separada confirmou dados do período de sete dias; não foi atribuída a ela evidência de revisão visual.

@@ -16,6 +16,7 @@ main.jsx
     │   ├── Hero
     │   ├── ConverterForm
     │   └── HistorySection
+    │       └── HistoryChart (carregamento sob demanda)
     └── Footer
 ```
 
@@ -27,7 +28,8 @@ main.jsx
 | `Header` | Exibe a marca e gera os links da navegação principal. | `src/components/Header.jsx` | `src/components/Header.module.css` | `brandName`: nome da aplicação; `navigationItems`: objetos com `label` e `href`. | Nenhum. |
 | `Hero` | Apresenta a proposta, o atalho para o conversor e identifica a Frankfurter como fonte. | `src/components/Hero.jsx` | `src/components/Hero.module.css` | `title` e `description`. | Nenhum. |
 | `ConverterForm` | Consome o hook da taxa, apresenta estados da requisição, valida o valor e calcula com a taxa direta. | `src/components/ConverterForm.jsx` | `src/components/ConverterForm.module.css` | Catálogo e seu estado, par e revisão, callbacks de alteração, inversão e nova tentativa. | `amount`, `result` e erro de validação. |
-| `HistorySection` | Identifica o par compartilhado e comunica que o histórico permanece em desenvolvimento. | `src/components/HistorySection.jsx` | `src/components/HistorySection.module.css` | `sourceCode` e `targetCode`. | Nenhum. |
+| `HistorySection` | Seleciona um dos oito períodos, consome o hook histórico e apresenta os estados e o gráfico. | `src/components/HistorySection.jsx` | `src/components/HistorySection.module.css` | `sourceCode`, `targetCode`, `pairRevision` e `enabled`. | `period`: período selecionado. |
+| `HistoryChart` | Renderiza a série real em um gráfico de linha responsivo carregado sob demanda. | `src/components/HistoryChart.jsx` | `src/components/HistorySection.module.css` | `data`, par e formatadores. | Nenhum. |
 | `Footer` | Exibe a identificação acadêmica e a fonte planejada para dados reais. | `src/components/Footer.jsx` | `src/components/Footer.module.css` | `dataSource`. | Nenhum. |
 
 ## Fluxo de dados e comportamento atual
@@ -44,6 +46,8 @@ main.jsx
 - O estado da cotação registra par, revisão e tentativa. Mesmo que o usuário saia de um par e retorne rapidamente, dados da revisão anterior não são mostrados como atuais.
 - A submissão rejeita entrada vazia, não finita, zero ou negativa e delega `valor × taxa` a `convertWithDirectRate`.
 - Quando as moedas são iguais, o valor é preservado sem consultar ou inventar taxa e data.
+- `HistorySection` consome `useHistoricalRates`; alterar par ou período cria uma nova consulta e invalida visualmente os dados anteriores.
+- `HistoryChart` recebe somente os registros publicados pela API, sem interpolação ou fabricação de datas.
 - A alteração de qualquer moeda limpa resultado e erro anteriores.
 - `amount`, `result` e `error` permanecem locais porque não são consumidos por outros componentes.
 
@@ -54,7 +58,7 @@ main.jsx
 ## Pendências fora desta etapa
 
 - navegação interativa e revisão visual final dos layouts do Figma;
-- histórico, gráfico, tabela, filtros, ordenação e exportação CSV.
+- tabela, filtros, ordenação e exportação CSV.
 
 ## Funções de negócio
 
@@ -63,3 +67,5 @@ As funções puras de conversão, períodos, filtros e ordenação ficam em `src
 ## Custom hook
 
 `src/hooks/useExchangeRate.js` recebe origem, destino, revisão do par e indicação de que a consulta está habilitada. Ele devolve `quote`, `status`, `error` e `retry`. O hook encapsula carregamento por token, sucesso, erro, ausência de dados, identidade de moedas, cancelamento e proteção contra respostas antigas. Nos testes, `requestRate` permite injetar um serviço simulado; a aplicação usa `getLatestRate` por padrão.
+
+`src/hooks/useHistoricalRates.js` aplica `calculateHistoricalInterval`, consulta `getHistoricalRates` e devolve `data`, `status`, `error`, `interval` e `retry`. O hook trata cancelamento, resposta atrasada, troca A → B → A, ausência de dados e moedas iguais sem fabricar histórico.
