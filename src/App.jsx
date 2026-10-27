@@ -1,4 +1,4 @@
-import './App.css'
+import styles from './App.module.css'
 import ConverterForm from './components/ConverterForm'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -24,10 +24,10 @@ const demoRates = {
 
 function App() {
   return (
-    <div className="app-shell">
+    <div className={styles.appShell}>
       <Header brandName="Câmbio Fácil" navigationItems={navigationItems} />
 
-      <main id="inicio">
+      <main className={styles.main} id="inicio">
         <Hero
           title="Entenda o câmbio sem complicação."
           description="Converta valores e acompanhe a variação das moedas em uma experiência simples e direta."

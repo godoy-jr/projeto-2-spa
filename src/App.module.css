@@ -1,0 +1,14 @@
+.appShell {
+  min-height: 100vh;
+}
+
+.main {
+  width: min(1120px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+@media (max-width: 560px) {
+  .main {
+    width: min(100% - 28px, 1120px);
+  }
+}

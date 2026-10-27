@@ -1,0 +1,37 @@
+.historySection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding: 70px;
+  border-radius: 24px;
+  background: var(--blue-soft);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--blue);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.historySection p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 860px) {
+  .historySection {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 42px;
+  }
+}
+
+@media (max-width: 560px) {
+  .historySection {
+    padding: 30px 24px;
+  }
+}

@@ -250,13 +250,10 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 
 ## 9. Pendências conhecidas
 
-- criar os protótipos no Figma e registrar o link em `docs/FIGMA.md`;
+- configurar a navegação interativa entre os layouts do Figma e realizar uma revisão visual final do arquivo;
 - estudar a API Frankfurter no Postman e salvar a Collection;
 - documentar os testes da API em `docs/API_TESTS.md`;
-- documentar componentes em `docs/COMPONENTS.md`;
 - documentar funções e testes em `docs/FUNCTION_TESTS.md`;
-- documentar o uso de inteligência artificial em `docs/AI_USAGE.md`;
-- migrar os estilos globais dos componentes para CSS Modules;
 - implementar Lifting State Up;
 - implementar integração real com a API, `useEffect` e custom hook;
 - implementar inversão, taxa e data efetiva;
@@ -267,4 +264,8 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 
 ## 10. Situação atual
 
-A versão atual possui interface React componentizada, props, listas com `map`, eventos e estado local com `useState`. A conversão existente usa taxas fictícias claramente identificadas e serve apenas para aprendizado. Ela não comprova a integração com a API nem atende, por si só, aos critérios de aceite das cotações reais.
+A versão atual possui interface React componentizada, props, listas com `map`, eventos e estado local com `useState`. Os estilos específicos foram separados em CSS Modules e a estrutura real está documentada em `docs/COMPONENTS.md`.
+
+O Figma do projeto possui wireframes de baixa fidelidade e layouts de média fidelidade para desktop e mobile, incluindo os estados de sucesso, carregamento, erro, ausência de dados e validação. Esses layouts são editáveis, porém estáticos e ainda não possuem navegação interativa. O link e as limitações estão registrados em `docs/FIGMA.md`, e o auxílio de IA está registrado em `docs/AI_USAGE.md`.
+
+A conversão existente no código usa taxas fictícias claramente identificadas e serve apenas para aprendizado. Ela não comprova a integração com a API nem atende, por si só, aos critérios de aceite das cotações reais.

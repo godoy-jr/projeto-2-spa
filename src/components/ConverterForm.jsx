@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import styles from './ConverterForm.module.css'
 
 function ConverterForm({ currencies, demoRates }) {
   const [amount, setAmount] = useState('')
@@ -30,15 +31,15 @@ function ConverterForm({ currencies, demoRates }) {
   }
 
   return (
-    <section className="converter-section" id="conversor" aria-labelledby="converter-title">
-      <div className="section-heading">
-        <p className="eyebrow">Conversor</p>
+    <section className={styles.converterSection} id="conversor" aria-labelledby="converter-title">
+      <div className={styles.sectionHeading}>
+        <p className={styles.eyebrow}>Conversor</p>
         <h2 id="converter-title">Simule uma conversão</h2>
         <p>Pratique eventos e estado usando valores demonstrativos.</p>
       </div>
 
-      <form className="converter-card" onSubmit={handleSubmit} noValidate>
-        <div className="field amount-field">
+      <form className={styles.converterCard} onSubmit={handleSubmit} noValidate>
+        <div className={`${styles.field} ${styles.amountField}`}>
           <label htmlFor="amount">Valor</label>
           <input
             id="amount"
@@ -55,7 +56,7 @@ function ConverterForm({ currencies, demoRates }) {
           />
         </div>
 
-        <div className="field">
+        <div className={styles.field}>
           <label htmlFor="from-currency">Moeda de origem</label>
           <select
             id="from-currency"
@@ -71,9 +72,9 @@ function ConverterForm({ currencies, demoRates }) {
           </select>
         </div>
 
-        <span className="exchange-icon" aria-hidden="true">→</span>
+        <span className={styles.exchangeIcon} aria-hidden="true">→</span>
 
-        <div className="field">
+        <div className={styles.field}>
           <label htmlFor="to-currency">Moeda de destino</label>
           <select
             id="to-currency"
@@ -91,11 +92,11 @@ function ConverterForm({ currencies, demoRates }) {
 
         <button type="submit">Converter</button>
 
-        <div className="form-feedback" aria-live="polite">
-          <p className="form-note">Taxas fictícias para fins didáticos — não representam a cotação atual.</p>
-          {error && <p className="error-message">{error}</p>}
+        <div className={styles.formFeedback} aria-live="polite">
+          <p className={styles.formNote}>Taxas fictícias para fins didáticos — não representam a cotação atual.</p>
+          {error && <p className={styles.errorMessage}>{error}</p>}
           {result !== null && (
-            <p className="conversion-result">
+            <p className={styles.conversionResult}>
               {Number(amount).toLocaleString('pt-BR', { maximumFractionDigits: 2 })} {sourceCode} ={' '}
               <strong>{result.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {targetCode}</strong>
             </p>

@@ -15,6 +15,7 @@ Construir uma interface em português que permita converter moedas com dados da 
 - Componentes e props;
 - Eventos e `useState`;
 - Vite;
+- CSS Modules e CSS global de base;
 - CSS responsivo;
 - Git.
 
@@ -46,7 +47,11 @@ npm run build
 - exibir dados em tabela com filtros e ordenação;
 - exportar os dados exibidos para CSV.
 
-As funcionalidades ainda precisam ser validadas com o Board fornecido pelo professor, que não estava acessível pelas ferramentas usadas na inspeção inicial.
+Os requisitos funcionais e não funcionais estão consolidados em `docs/REQUIREMENTS.md`.
+
+## Prototipação
+
+O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7ymi) contém wireframes de baixa fidelidade, layouts de média fidelidade e estados para desktop e mobile. Os layouts são editáveis, mas ainda estáticos e sem navegação interativa. Consulte `docs/FIGMA.md` para o registro completo e para a diferenciação entre o trabalho do projeto e as referências HERMES fornecidas pelo professor.
 
 ## Evolução planejada
 
@@ -66,7 +71,8 @@ As funcionalidades ainda precisam ser validadas com o Board fornecido pelo profe
 - [ ] Repositório público no GitHub;
 - [ ] Aplicação publicada e funcionando;
 - [ ] Documentação final do projeto;
-- [ ] Protótipos criados no Figma;
+- [x] Wireframes e protótipos estáticos criados no Figma;
+- [ ] Navegação interativa configurada no Figma;
 - [ ] Collection criada no Postman;
 - [ ] Histórico real de commits incrementais.
 
