@@ -83,7 +83,7 @@ O build criou `dist/` apenas como saída local de verificação. Essa pasta perm
 
 ## Verificação da camada de serviço v2
 
-A camada src/services/frankfurter.js está preparada, mas não conectada ao React. Os contratos estão em docs/SERVICES.md e os testes em test/frankfurter.test.js.
+A camada `src/services/frankfurter.js` foi preparada isoladamente nesta verificação. Os contratos estão em `docs/SERVICES.md` e os testes em `test/frankfurter.test.js`.
 
 Resultados efetivamente executados nesta etapa:
 - npm test: 37 aprovados (21 de negócio e 16 de serviço), zero falhas e zero ignorados;
@@ -91,3 +91,15 @@ Resultados efetivamente executados nesta etapa:
 - npm run build: aprovado, 28 módulos transformados.
 
 Todos os testes de serviço usam fetch simulado; nenhuma consulta HTTP real foi executada nesta etapa. O primeiro build foi impedido por permissão de gravação de temporários e passou ao ser reexecutado com essa permissão. Nenhuma dependência foi adicionada e dist continua sendo apenas saída local ignorada.
+
+## Verificação da integração do conversor
+
+Após conectar catálogo e taxa aos componentes, foram executados:
+
+- `npm test`: 37 testes aprovados, 0 falhas e 0 ignorados;
+- `npm run lint`: concluído sem erros ou avisos;
+- `npm run build`: concluído com sucesso, 29 módulos transformados.
+
+Os testes automatizados continuam cobrindo funções e serviço com fetch simulado; não foi adicionada biblioteca de teste de componentes. Em revisão independente no navegador, foram confirmados: conversão com dados reais, inversão, preservação do valor informado, moedas iguais sem taxa/data, entradas inválidas e troca rápida do par sem exibir resultado antigo. Esse registro não amplia a evidência para outros cenários.
+
+Como verificação HTTP separada dos testes automatizados e do Postman, as próprias funções do serviço consultaram a instância pública nesta execução: o catálogo retornou 170 moedas, incluindo BRL e EUR, e `getLatestRate('EUR', 'BRL')` retornou `{"date":"2026-10-27","base":"EUR","quote":"BRL","rate":5.9696}`. O servidor Vite local respondeu `200` e entregou o ponto de montagem e o módulo principal. Essas verificações confirmam conectividade e disponibilidade local, mas não substituem a revisão visual no navegador.

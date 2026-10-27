@@ -65,6 +65,32 @@
 .submitButton:hover { background: var(--blue-dark); }
 .formFeedback { grid-column: 1 / -1; }
 .formNote { margin: 4px 0 0; color: var(--muted); font-size: 0.86rem; }
+.statusMessage { margin: 8px 0 0; color: var(--muted); font-weight: 650; }
+.errorPanel,
+.emptyPanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 10px;
+}
+.errorPanel { color: #b42318; background: #fff1f0; }
+.emptyPanel { color: var(--navy); background: #f8fafc; }
+.errorPanel p,
+.emptyPanel p { margin: 0; font-weight: 700; }
+.errorPanel button,
+.emptyPanel button {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  color: inherit;
+  background: transparent;
+  font-weight: 750;
+  cursor: pointer;
+}
 .errorMessage { margin: 12px 0 0; color: #b42318; font-weight: 700; }
 .conversionResult {
   margin: 18px 0 0;
@@ -73,6 +99,12 @@
   color: var(--navy);
   background: var(--blue-soft);
   font-size: 1.08rem;
+}
+.resultDetails {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
 }
 @media (max-width: 860px) {
   .converterCard { grid-template-columns: 1fr auto 1fr; }
@@ -84,4 +116,6 @@
   .converterCard { grid-template-columns: 1fr; padding: 20px; }
   .converterCard .field,
   .converterCard button { grid-column: 1; }
+  .errorPanel,
+  .emptyPanel { align-items: flex-start; flex-direction: column; }
 }

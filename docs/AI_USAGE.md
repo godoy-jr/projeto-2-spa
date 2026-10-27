@@ -56,3 +56,7 @@ Os layouts resultantes permanecem estáticos e ainda não possuem navegação in
 ## Camada de serviço v2
 
 O assistente de acompanhamento implementou a camada de serviço e seus testes determinísticos com fetch simulado, consultando a documentação oficial e a Collection existente. Também documentou os contratos, erros e moedas iguais. Não realizou consultas reais de cotações nesta etapa nem conectou os serviços ao React. Não houve commit ou push.
+
+## Integração do conversor
+
+O assistente responsável pelas alterações locais conectou o catálogo e a taxa aos componentes com `useEffect`, apoiou a organização dos estados, o cancelamento e a proteção contra respostas obsoletas, removeu a apresentação fictícia e atualizou a documentação. Testes automatizados, lint e build foram executados. O autor informou que uma revisão independente no navegador confirmou conversão real, inversão, preservação do valor, moedas iguais, entradas inválidas e troca rápida do par.

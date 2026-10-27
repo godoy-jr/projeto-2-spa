@@ -251,8 +251,7 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 ## 9. Pendências conhecidas
 
 - configurar a navegação interativa entre os layouts do Figma e realizar uma revisão visual final do arquivo;
-- implementar integração real com a API, `useEffect` e custom hook;
-- implementar taxa e data efetiva com os dados reais da API;
+- extrair a lógica de consulta para custom hook reutilizável;
 - implementar histórico, gráfico, tabela, filtros e ordenação;
 - implementar exportação CSV;
 - revisar testes, responsividade e todos os estados da aplicação;
@@ -264,10 +263,8 @@ A versão atual possui interface React componentizada, props, listas com `map`, 
 
 O Figma do projeto possui wireframes de baixa fidelidade e layouts de média fidelidade para desktop e mobile, incluindo os estados de sucesso, carregamento, erro, ausência de dados e validação. Esses layouts são editáveis, porém estáticos e ainda não possuem navegação interativa. O link e as limitações estão registrados em `docs/FIGMA.md`, e o auxílio de IA está registrado em `docs/AI_USAGE.md`.
 
-A API Frankfurter v2 foi investigada por requisições HTTP, e a Collection registrada em `postman/Frankfurter-v2.postman_collection.json` foi executada pelo autor no Postman. Os cenários, as observações HTTP e o resumo da execução no Postman estão documentados separadamente em `docs/API_TESTS.md`. A integração da API com a aplicação permanece pendente.
+A API Frankfurter v2 foi investigada por requisições HTTP, e a Collection registrada em `postman/Frankfurter-v2.postman_collection.json` foi executada pelo autor no Postman. Os cenários, as observações HTTP e o resumo da execução no Postman estão documentados separadamente em `docs/API_TESTS.md`.
 
-As funções puras de conversão direta e demonstrativa, cálculo dos oito períodos históricos, filtros combinados e ordenação foram implementadas em `src/utils/` e verificadas com testes automatizados. Somente a função demonstrativa está conectada ao conversor atual; as demais permanecem preparadas para etapas futuras, conforme registrado em `docs/FUNCTION_TESTS.md`.
+As funções puras de conversão direta e demonstrativa, cálculo dos oito períodos históricos, filtros combinados e ordenação foram implementadas em `src/utils/` e verificadas com testes automatizados. A conversão direta está conectada ao conversor real; as demais permanecem preparadas para etapas futuras, conforme registrado em `docs/FUNCTION_TESTS.md`.
 
-A conversão existente no código usa taxas fictícias claramente identificadas e serve apenas para aprendizado. Ela não comprova a integração com a API nem atende, por si só, aos critérios de aceite das cotações reais.
-
-A camada de serviço v2 foi preparada com fetch e async/await, validação e suporte a AbortSignal. Ela permanece independente e desconectada dos componentes. Os contratos e o tratamento de moedas iguais estão em docs/SERVICES.md; integração visual, efeitos e custom hook continuam pendentes.
+O conversor carrega moedas e taxa real com `useEffect`, usa `valor × taxa` e mostra a data efetiva. Consultas substituídas são canceladas, e o estado da taxa é vinculado ao par, à revisão e à tentativa atual para impedir a exibição de respostas antigas. Moedas iguais preservam o valor sem taxa ou data inventada. O custom hook e as funcionalidades históricas continuam pendentes.

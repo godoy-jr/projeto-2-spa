@@ -1,12 +1,16 @@
-import { useState } from 'react'
-import { convertWithDemoRates } from '../utils/conversion'
+import { useEffect, useRef, useState } from 'react'
+import { getLatestRate } from '../services/frankfurter'
+import { convertWithDirectRate } from '../utils/conversion'
 import styles from './ConverterForm.module.css'
 
 function ConverterForm({
   currencies,
-  demoRates,
+  currenciesStatus,
+  currenciesError,
+  onRetryCurrencies,
   sourceCode,
   targetCode,
+  pairRevision,
   onSourceChange,
   onTargetChange,
   onInvertCurrencies,
@@ -14,6 +18,84 @@ function ConverterForm({
   const [amount, setAmount] = useState('')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
+  const [quoteState, setQuoteState] = useState({
+    pairKey: '',
+    requestToken: '',
+    status: 'idle',
+    data: null,
+    error: '',
+  })
+  const [quoteRequest, setQuoteRequest] = useState(0)
+  const latestRequest = useRef(0)
+  const pairKey = `${sourceCode}/${targetCode}`
+  const requestToken = `${pairRevision}/${quoteRequest}`
+
+  useEffect(() => {
+    const requestId = latestRequest.current + 1
+    latestRequest.current = requestId
+    const controller = new AbortController()
+    let active = true
+
+    if (currenciesStatus !== 'success' || !sourceCode || !targetCode) {
+      return () => controller.abort()
+    }
+
+    if (sourceCode === targetCode) {
+      return () => controller.abort()
+    }
+
+    async function loadQuote() {
+      try {
+        const data = await getLatestRate(sourceCode, targetCode, { signal: controller.signal })
+        if (!active || latestRequest.current !== requestId) return
+
+        if (data === null) {
+          setQuoteState({ pairKey, requestToken, status: 'empty', data: null, error: '' })
+          return
+        }
+
+        setQuoteState({ pairKey, requestToken, status: 'success', data, error: '' })
+      } catch (requestError) {
+        if (!active || latestRequest.current !== requestId || requestError.name === 'AbortError') return
+
+        if (requestError.status === 404) {
+          setQuoteState({ pairKey, requestToken, status: 'empty', data: null, error: '' })
+          return
+        }
+
+        setQuoteState({
+          pairKey,
+          requestToken,
+          status: 'error',
+          data: null,
+          error: 'Não foi possível carregar a cotação. Tente novamente.',
+        })
+      }
+    }
+
+    loadQuote()
+
+    return () => {
+      active = false
+      controller.abort()
+    }
+  }, [currenciesStatus, pairKey, requestToken, sourceCode, targetCode])
+
+  let quoteStatus = quoteState.status
+  if (currenciesStatus !== 'success' || !sourceCode || !targetCode) {
+    quoteStatus = 'idle'
+  } else if (sourceCode === targetCode) {
+    quoteStatus = 'identity'
+  } else if (quoteState.pairKey !== pairKey || quoteState.requestToken !== requestToken) {
+    quoteStatus = 'loading'
+  }
+
+  const quote = quoteStatus === 'success' ? quoteState.data : null
+  const quoteError = quoteStatus === 'error' ? quoteState.error : ''
+  const formattedRate = quote?.rate.toLocaleString('pt-BR', {
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 6,
+  })
 
   function resetFeedback() {
     setResult(null)
@@ -31,7 +113,19 @@ function ConverterForm({
       return
     }
 
-    const convertedAmount = convertWithDemoRates(numericAmount, sourceCode, targetCode, demoRates)
+    if (sourceCode === targetCode) {
+      setError('')
+      setResult(numericAmount)
+      return
+    }
+
+    if (quoteStatus !== 'success' || !quote) {
+      setError('Aguarde uma cotação válida antes de converter.')
+      setResult(null)
+      return
+    }
+
+    const convertedAmount = convertWithDirectRate(numericAmount, quote.rate)
 
     setError('')
     setResult(convertedAmount)
@@ -47,12 +141,15 @@ function ConverterForm({
     resetFeedback()
   }
 
+  const controlsDisabled = currenciesStatus !== 'success'
+  const conversionDisabled = controlsDisabled || quoteStatus === 'loading'
+
   return (
     <section className={styles.converterSection} id="conversor" aria-labelledby="converter-title">
       <div className={styles.sectionHeading}>
         <p className={styles.eyebrow}>Conversor</p>
-        <h2 id="converter-title">Simule uma conversão</h2>
-        <p>Pratique eventos e estado usando valores demonstrativos.</p>
+        <h2 id="converter-title">Converta com a cotação mais recente</h2>
+        <p>Consulte taxas de referência e a data efetiva informada pela Frankfurter.</p>
       </div>
 
       <form className={styles.converterCard} onSubmit={handleSubmit} noValidate>
@@ -79,6 +176,7 @@ function ConverterForm({
             id="from-currency"
             name="from-currency"
             value={sourceCode}
+            disabled={controlsDisabled}
             onChange={(event) => handleCurrencyChange(onSourceChange, event.target.value)}
           >
             {currencies.map((currency) => (
@@ -89,7 +187,7 @@ function ConverterForm({
           </select>
         </div>
 
-        <button className={styles.invertButton} type="button" onClick={handleInvert}>
+        <button className={styles.invertButton} type="button" onClick={handleInvert} disabled={controlsDisabled}>
           <span aria-hidden="true">⇄</span>
           <span>Inverter moedas</span>
         </button>
@@ -100,6 +198,7 @@ function ConverterForm({
             id="to-currency"
             name="to-currency"
             value={targetCode}
+            disabled={controlsDisabled}
             onChange={(event) => handleCurrencyChange(onTargetChange, event.target.value)}
           >
             {currencies.map((currency) => (
@@ -110,15 +209,50 @@ function ConverterForm({
           </select>
         </div>
 
-        <button className={styles.submitButton} type="submit">Converter</button>
+        <button className={styles.submitButton} type="submit" disabled={conversionDisabled}>
+          {quoteStatus === 'loading' ? 'Carregando taxa…' : 'Converter'}
+        </button>
 
         <div className={styles.formFeedback} aria-live="polite">
-          <p className={styles.formNote}>Taxas fictícias para fins didáticos — não representam a cotação atual.</p>
+          {currenciesStatus === 'loading' && <p className={styles.statusMessage}>Carregando moedas…</p>}
+          {currenciesStatus === 'error' && (
+            <div className={styles.errorPanel} role="alert">
+              <p>{currenciesError}</p>
+              <button type="button" onClick={onRetryCurrencies}>Tentar novamente</button>
+            </div>
+          )}
+          {currenciesStatus === 'success' && quoteStatus === 'loading' && (
+            <p className={styles.statusMessage}>Consultando cotação de {sourceCode} para {targetCode}…</p>
+          )}
+          {quoteStatus === 'identity' && (
+            <p className={styles.statusMessage}>Mesma moeda — sem consulta de cotação ou data efetiva.</p>
+          )}
+          {quoteStatus === 'empty' && (
+            <div className={styles.emptyPanel}>
+              <p>Nenhuma cotação disponível para este par.</p>
+              <button type="button" onClick={() => setQuoteRequest((current) => current + 1)}>Consultar novamente</button>
+            </div>
+          )}
+          {quoteStatus === 'error' && (
+            <div className={styles.errorPanel} role="alert">
+              <p>{quoteError}</p>
+              <button type="button" onClick={() => setQuoteRequest((current) => current + 1)}>Tentar novamente</button>
+            </div>
+          )}
+          {quoteStatus === 'success' && quote && (
+            <p className={styles.formNote}>
+              Taxa: 1 {quote.base} = {formattedRate} {quote.quote}
+              {' · '}Data efetiva: {quote.date}
+            </p>
+          )}
           {error && <p className={styles.errorMessage}>{error}</p>}
           {result !== null && (
             <p className={styles.conversionResult}>
               {Number(amount).toLocaleString('pt-BR', { maximumFractionDigits: 2 })} {sourceCode} ={' '}
               <strong>{result.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {targetCode}</strong>
+              {quote && sourceCode !== targetCode && (
+                <span className={styles.resultDetails}>Taxa utilizada: {formattedRate} · Data efetiva: {quote.date}</span>
+              )}
             </p>
           )}
         </div>

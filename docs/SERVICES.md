@@ -2,7 +2,7 @@
 
 ## Escopo
 
-`src/services/frankfurter.js` consulta os endpoints v2 da [documentação oficial](https://frankfurter.dev/). A camada não importa React, não acessa o DOM e não foi conectada aos componentes. O conversor continua demonstrativo.
+`src/services/frankfurter.js` consulta os endpoints v2 da [documentação oficial](https://frankfurter.dev/). A camada não importa React nem acessa o DOM. `App` usa o catálogo e `ConverterForm` usa a taxa mais recente; o histórico ainda não foi conectado.
 
 ## Funções e contratos
 
@@ -16,7 +16,7 @@ Os códigos de entrada são normalizados para maiúsculas; as datas usam `YYYY-M
 
 ## Moedas iguais
 
-`getLatestRate('EUR', 'EUR')` retorna `null` sem HTTP. Isso representa uma identidade matemática, não uma cotação publicada. Na futura integração, a aplicação deverá conservar o valor informado, apresentar “Mesma moeda — sem consulta de cotação” e omitir a data de cotação. Não deverá tratar `null` como falha de rede nem criar data fictícia. A consulta histórica com moedas iguais rejeita com `INVALID_INPUT`; a interface deverá solicitar moedas distintas, sem gerar série artificial.
+`getLatestRate('EUR', 'EUR')` retorna `null` sem HTTP. Isso representa uma identidade matemática, não uma cotação publicada. O conversor conserva o valor informado, apresenta “Mesma moeda — sem consulta de cotação ou data efetiva” e não cria dados fictícios. A consulta histórica com moedas iguais rejeita com `INVALID_INPUT`; a futura interface histórica deverá solicitar moedas distintas, sem gerar série artificial.
 
 ## Erros e cancelamento
 
@@ -29,7 +29,16 @@ Os códigos de entrada são normalizados para maiúsculas; as datas usam `YYYY-M
 | `NETWORK` | Falha no fetch ou interrupção ao ler a resposta |
 | `INVALID_RESPONSE` | JSON inválido ou dados incompatíveis com o contrato |
 
-Cancelamentos são propagados sem virar erro HTTP/rede, tanto antes da chamada quanto durante fetch e leitura do corpo. O consumidor futuro deve ignorar o cancelamento de consultas obsoletas. O `signal` é encaminhado ao fetch.
+Cancelamentos são propagados sem virar erro HTTP/rede, tanto antes da chamada quanto durante fetch e leitura do corpo. Os efeitos atuais encaminham o `signal`, cancelam consultas substituídas e verificam a identidade da requisição antes de aceitar uma resposta. O estado da taxa também é associado ao par, à revisão e à tentativa atual.
+
+## Integração atual
+
+- o catálogo possui carregamento, erro e ação de tentar novamente;
+- a taxa possui carregamento, erro, ausência de dados e nova tentativa;
+- HTTP `404` na taxa é apresentado como ausência de dados;
+- o resultado usa `valor × taxa` e mostra a data efetiva recebida;
+- controles do par são preservados, incluindo inversão e o valor digitado;
+- a lógica permanece diretamente nos componentes nesta etapa; o custom hook ainda não foi criado.
 
 ## Testes
 

@@ -47,7 +47,7 @@
   box-shadow: var(--shadow);
 }
 
-.demoBadge {
+.dataBadge {
   display: inline-flex;
   margin-bottom: 34px;
   padding: 6px 10px;

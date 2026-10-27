@@ -2,7 +2,7 @@
 
 Single Page Application acadêmica para conversão e análise de moedas. O projeto será desenvolvido de forma incremental com React, Vite e JavaScript.
 
-> Status atual: formulário interativo com estado local, par de moedas compartilhado e inversão por callback. A aplicação ainda não consulta cotações reais.
+> Status atual: conversor integrado à Frankfurter v2, com catálogo de moedas, taxa direta, data efetiva, inversão, cancelamento e estados da consulta. Histórico e análise ainda estão pendentes.
 
 ## Objetivo
 
@@ -14,6 +14,7 @@ Construir uma interface em português que permita converter moedas com dados da 
 - JavaScript e JSX;
 - Componentes e props;
 - Eventos e `useState`;
+- `useEffect`, `fetch` e `async/await`;
 - Funções puras e testes automatizados com `node:test`;
 - Vite;
 - CSS Modules e CSS global de base;
@@ -62,12 +63,13 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 3. Eventos, formulários e `useState` — concluída;
 4. Lifting State Up e inversão de moedas — concluída;
 5. Funções de negócio e processamento — concluída;
-6. Camada de serviço com `fetch` e `async/await` — implementada e testada isoladamente; conexão aos componentes e `useEffect` pendentes;
-7. Custom hook e tratamento dos estados da requisição;
-8. Histórico e gráfico;
-9. Tabela, filtros e ordenação;
-10. Exportação CSV;
-11. Revisão, testes, documentação e publicação.
+6. Camada de serviço com `fetch` e `async/await` — concluída;
+7. Conversor com moedas e taxas reais usando `useEffect` — concluída;
+8. Custom hook reutilizável;
+9. Histórico e gráfico;
+10. Tabela, filtros e ordenação;
+11. Exportação CSV;
+12. Revisão, testes, documentação e publicação.
 
 ## Entregáveis e pendências
 
@@ -81,8 +83,8 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 
 ## Fonte dos dados
 
-Quando a integração for implementada, as cotações reais virão da API Frankfurter. Até lá, todo valor mostrado na interface está identificado como demonstrativo e não deve ser interpretado como uma cotação atual.
+O conversor consulta a API Frankfurter v2 e calcula o resultado com `valor × taxa`. A interface mostra a taxa e a data efetiva devolvidas pela API. Taxas de referência não devem ser interpretadas como cotações intradiárias em tempo real.
 
-## Camada de serviço preparada
+## Camada de serviço
 
-As consultas de moedas, taxa e histórico estão em src/services/frankfurter.js, com validação e cancelamento. Ainda não são usadas pela interface. Contratos e testes: [docs/SERVICES.md](docs/SERVICES.md).
+As consultas de moedas, taxa e histórico estão em `src/services/frankfurter.js`, com validação e cancelamento. Catálogo e taxa atual já são usados pelo conversor; histórico permanece preparado para a próxima etapa. Contratos e testes: [docs/SERVICES.md](docs/SERVICES.md).
