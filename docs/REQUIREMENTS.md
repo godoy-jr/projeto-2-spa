@@ -251,7 +251,7 @@ A exportação deve ser bloqueada quando não houver registros visíveis.
 ## 9. Pendências conhecidas
 
 - configurar a navegação interativa entre os layouts do Figma e realizar uma revisão visual final do arquivo;
-- revisar testes, responsividade e todos os estados da aplicação;
+- revisar visualmente desktop, mobile, gráfico, tabela, CSV e todos os estados da versão final;
 - publicar a versão final da aplicação.
 
 ## 10. Situação atual
@@ -269,3 +269,5 @@ O conversor carrega moedas e taxa real com `useEffect`, usa `valor × taxa` e mo
 O histórico real aceita os oito períodos obrigatórios, recalcula os limites de calendário e atualiza ao mudar o par ou período. `useHistoricalRates` preserva cancelamento e proteção contra respostas antigas. O gráfico responsivo usa somente os registros publicados retornados pela API; moedas iguais e séries vazias não geram dados artificiais.
 
 A tabela apresenta data, origem, destino e cotação, com filtros combinados inclusivos, validação, limpeza, ordenação nos dois sentidos e contagem. O CSV contém exatamente a lista filtrada e ordenada, possui cabeçalhos e nome identificável, protege caracteres especiais e é bloqueado quando não há registros.
+
+A suíte automatizada final possui 56 testes aprovados, incluindo funções, serviços, hooks e CSV. Lint e build foram concluídos. Essas verificações não são tratadas como prova visual; a conferência final no navegador e a publicação continuam pendentes conforme `docs/DELIVERY_CHECKLIST.md`.

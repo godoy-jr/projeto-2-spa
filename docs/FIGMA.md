@@ -29,6 +29,7 @@ O arquivo contém layouts editáveis criados para o Câmbio Fácil com auxílio 
 - o arquivo não comprova o funcionamento da aplicação;
 - a implementação ainda deve ser comparada aos protótipos durante as próximas etapas;
 - a navegação interativa entre os frames ainda precisa ser criada e conferida.
+- nesta revisão final, o arquivo não pôde ser aberto pelas ferramentas disponíveis; o acesso atual do avaliador e mudanças posteriores não foram confirmados.
 
 ## Referências do professor
 

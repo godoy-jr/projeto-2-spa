@@ -2,7 +2,7 @@
 
 Single Page Application acadêmica para conversão e análise de moedas. O projeto será desenvolvido de forma incremental com React, Vite e JavaScript.
 
-> Status atual: conversor integrado à Frankfurter v2, com catálogo de moedas, taxa direta, data efetiva, inversão, cancelamento e estados da consulta. Histórico e análise ainda estão pendentes.
+> Status atual: conversor, histórico, gráfico, tabela, filtros, ordenação e CSV implementados com dados da Frankfurter v2. Publicação e revisão visual final permanecem pendentes.
 
 ## Objetivo
 
@@ -71,7 +71,7 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 9. Histórico e gráfico — concluída;
 10. Tabela, filtros e ordenação — concluída;
 11. Exportação CSV — concluída;
-12. Revisão, testes, documentação e publicação.
+12. Revisão, testes e documentação — concluída tecnicamente; revisão visual final e publicação pendentes.
 
 ## Entregáveis e pendências
 
@@ -81,7 +81,17 @@ O [arquivo do projeto no Figma](https://www.figma.com/design/uX1l7OXMaKBnelFgvZ7
 - [x] Wireframes e protótipos estáticos criados no Figma;
 - [ ] Navegação interativa configurada no Figma;
 - [x] Collection da Frankfurter v2 criada e executada no Postman, com os resultados documentados em `docs/API_TESTS.md`;
-- [ ] Histórico real de commits incrementais.
+- [x] Histórico real de commits incrementais.
+
+Consulte o estado verificável da entrega em [`docs/DELIVERY_CHECKLIST.md`](docs/DELIVERY_CHECKLIST.md).
+
+## Verificação atual
+
+- 56 testes automatizados aprovados;
+- lint concluído sem erros ou avisos;
+- build de produção concluído;
+- revisão visual final do gráfico, tabela e CSV pendente nesta sessão;
+- aplicação ainda não publicada.
 
 ## Fonte dos dados
 
@@ -89,4 +99,4 @@ O conversor consulta a API Frankfurter v2 e calcula o resultado com `valor × ta
 
 ## Camada de serviço
 
-As consultas de moedas, taxa e histórico estão em `src/services/frankfurter.js`, com validação e cancelamento. Catálogo e taxa atual já são usados pelo conversor; histórico permanece preparado para a próxima etapa. Contratos e testes: [docs/SERVICES.md](docs/SERVICES.md).
+As consultas de moedas, taxa e histórico estão em `src/services/frankfurter.js`, com validação e cancelamento. Os três fluxos já são usados pela aplicação. Contratos e testes: [docs/SERVICES.md](docs/SERVICES.md).

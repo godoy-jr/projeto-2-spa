@@ -159,3 +159,7 @@ Por isso, a aplicação deve usar o campo `date` devolvido pela API como data ef
 - exibir a data recebida na resposta;
 - manter `base` e `quotes` alinhados ao par compartilhado da aplicação;
 - evitar assumir que uma taxa é intradiária: a Frankfurter trabalha com taxas de referência, não com mercado em tempo real.
+
+## Uso atual na aplicação
+
+O conversor e o histórico passaram a consumir os serviços v2. Essa implementação não altera nem substitui os resultados HTTP e do Postman registrados acima. Nenhuma nova execução no Postman foi realizada durante a revisão final.
