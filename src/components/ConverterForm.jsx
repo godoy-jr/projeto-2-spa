@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useExchangeRate } from '../hooks/useExchangeRate'
 import { convertWithDirectRate } from '../utils/conversion'
 import styles from './ConverterForm.module.css'
+import { Icon } from './Icons'
 
 function ConverterForm({
   currencies,
@@ -14,6 +15,8 @@ function ConverterForm({
   onSourceChange,
   onTargetChange,
   onInvertCurrencies,
+  isFavorite,
+  onToggleFavorite,
 }) {
   const [amount, setAmount] = useState('')
   const [result, setResult] = useState(null)
@@ -85,7 +88,20 @@ function ConverterForm({
     <section className={styles.converterSection} id="conversor" aria-labelledby="converter-title">
       <div className={styles.sectionHeading}>
         <p className={styles.eyebrow}>Conversor</p>
-        <h2 id="converter-title">Converta com a cotação mais recente</h2>
+        <div className={styles.titleRow}>
+          <h2 id="converter-title">Converta com a cotação mais recente</h2>
+          <button
+            className={`${styles.favoriteButton} ${isFavorite ? styles.favoriteActive : ''}`}
+            type="button"
+            onClick={onToggleFavorite}
+            disabled={sourceCode === targetCode}
+            aria-pressed={isFavorite}
+            aria-label={isFavorite ? `Remover ${sourceCode} para ${targetCode} dos favoritos` : `Salvar ${sourceCode} para ${targetCode} nos favoritos`}
+          >
+            <Icon name="star" filled={isFavorite} />
+            <span>{sourceCode}/{targetCode}</span>
+          </button>
+        </div>
         <p>Consulte taxas de referência e a data efetiva informada pela Frankfurter.</p>
       </div>
 

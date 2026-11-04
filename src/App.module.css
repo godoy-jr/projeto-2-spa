@@ -1,5 +1,6 @@
 .appShell {
   min-height: 100vh;
+  padding-bottom: calc(112px + env(safe-area-inset-bottom));
 }
 
 .main {

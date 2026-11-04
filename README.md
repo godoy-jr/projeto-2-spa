@@ -89,7 +89,7 @@ Consulte o estado verificável da entrega em [`docs/DELIVERY_CHECKLIST.md`](docs
 
 ## Verificação atual
 
-- 56 testes automatizados aprovados;
+- 59 testes automatizados aprovados;
 - lint concluído sem erros ou avisos;
 - build de produção concluído;
 - revisão independente confirmou os oito períodos, gráfico mobile, filtro de cotação, contagem, ordenação decrescente, CSV correspondente às linhas visíveis, bloqueio da exportação vazia e validação de mínimo maior que máximo;
@@ -100,6 +100,15 @@ Consulte o estado verificável da entrega em [`docs/DELIVERY_CHECKLIST.md`](docs
 ## Fonte dos dados
 
 O conversor consulta a API Frankfurter v2 e calcula o resultado com `valor × taxa`. A interface mostra a taxa e a data efetiva devolvidas pela API. Taxas de referência não devem ser interpretadas como cotações intradiárias em tempo real.
+
+## Navegação, favoritos, notícias e conta
+
+- barra flutuante responsiva com atalhos para Conversor, Histórico, Favoritos, Notícias e Conta;
+- favoritos direcionais persistidos no navegador (`EUR/BRL` e `BRL/EUR` são pares distintos);
+- notícias abrem buscas contextuais externas no Google Notícias, sem copiar ou inventar manchetes;
+- o estado visitante da Conta está disponível, sem bloquear conversor ou histórico.
+
+A autenticação real ainda não foi conectada. A solução recomendada, custos, configuração para GitHub Pages e estratégia de importação sem duplicatas estão em [`docs/AUTHENTICATION_PROPOSAL.md`](docs/AUTHENTICATION_PROPOSAL.md). A integração depende de aprovação prévia.
 
 ## Camada de serviço
 

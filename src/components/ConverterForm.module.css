@@ -1,6 +1,12 @@
 .converterSection { padding: 72px 0 96px; }
 .sectionHeading { max-width: 640px; margin-bottom: 30px; }
 .sectionHeading > p:last-child { color: var(--muted); }
+.titleRow { display: flex; align-items: center; gap: 16px; }
+.titleRow h2 { flex: 1; }
+.favoriteButton { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 42px; padding: 0 13px; border: 1px solid var(--border); border-radius: 12px; color: var(--muted); background: var(--surface); font-weight: 750; cursor: pointer; }
+.favoriteButton:hover { color: #b45309; background: #fff7ed; }
+.favoriteActive { color: #d97706; border-color: #fed7aa; background: #fff7ed; }
+.favoriteButton:disabled { cursor: not-allowed; opacity: .5; }
 .eyebrow {
   margin: 0 0 12px;
   color: var(--blue);
@@ -113,6 +119,7 @@
   .formFeedback { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
+  .titleRow { align-items: flex-start; flex-direction: column; }
   .converterCard { grid-template-columns: 1fr; padding: 20px; }
   .converterCard .field,
   .converterCard button { grid-column: 1; }

@@ -5,6 +5,10 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import HistorySection from './components/HistorySection'
+import FavoritesSection from './components/FavoritesSection'
+import FloatingNav from './components/FloatingNav'
+import AppPanel from './components/AppPanel'
+import { useFavorites } from './hooks/useFavorites'
 import { getCurrencies } from './services/frankfurter'
 
 const navigationItems = [
@@ -20,6 +24,9 @@ function App() {
   const [currenciesStatus, setCurrenciesStatus] = useState('loading')
   const [currenciesError, setCurrenciesError] = useState('')
   const [currenciesRequest, setCurrenciesRequest] = useState(0)
+  const [activeSection, setActiveSection] = useState('conversor')
+  const [openPanel, setOpenPanel] = useState(null)
+  const { favorites, toggleFavorite } = useFavorites()
 
   useEffect(() => {
     const controller = new AbortController()
@@ -71,6 +78,26 @@ function App() {
     setPairRevision((current) => current + 1)
   }
 
+  function selectPair(source, target) {
+    setSourceCode(source)
+    setTargetCode(target)
+    setPairRevision((current) => current + 1)
+    setActiveSection('conversor')
+    document.getElementById('conversor')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  function handleNavigate(item) {
+    setActiveSection(item.id)
+    if (item.panel) {
+      setOpenPanel(item.panel)
+      return
+    }
+    setOpenPanel(null)
+    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const isFavorite = favorites.some((item) => item.source === sourceCode && item.target === targetCode)
+
   return (
     <div className={styles.appShell}>
       <Header brandName="Câmbio Fácil" navigationItems={navigationItems} />
@@ -91,6 +118,8 @@ function App() {
           onSourceChange={handleSourceChange}
           onTargetChange={handleTargetChange}
           onInvertCurrencies={handleInvertCurrencies}
+          isFavorite={isFavorite}
+          onToggleFavorite={() => toggleFavorite(sourceCode, targetCode)}
         />
         <HistorySection
           sourceCode={sourceCode}
@@ -98,9 +127,23 @@ function App() {
           pairRevision={pairRevision}
           enabled={currenciesStatus === 'success'}
         />
+        <FavoritesSection
+          favorites={favorites}
+          onSelect={selectPair}
+          onRemove={toggleFavorite}
+        />
       </main>
 
       <Footer dataSource="API Frankfurter" />
+      <FloatingNav active={activeSection} onNavigate={handleNavigate} />
+      {openPanel && (
+        <AppPanel
+          type={openPanel}
+          sourceCode={sourceCode}
+          targetCode={targetCode}
+          onClose={() => setOpenPanel(null)}
+        />
+      )}
     </div>
   )
 }
