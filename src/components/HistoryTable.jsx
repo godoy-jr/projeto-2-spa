@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { createHistoryCsvFilename, downloadHistoryCsv } from '../utils/csv'
 import { filterHistory, sortHistory } from '../utils/history'
+import { paginate } from '../utils/pagination'
 import styles from './HistorySection.module.css'
 
 const initialFilters = { from: '', to: '', minRate: '', maxRate: '' }
@@ -9,6 +10,8 @@ function HistoryTable({ records, sourceCode, targetCode, interval }) {
   const [filters, setFilters] = useState(initialFilters)
   const [sortBy, setSortBy] = useState('date')
   const [direction, setDirection] = useState('asc')
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   const processed = useMemo(() => {
     try {
@@ -24,12 +27,19 @@ function HistoryTable({ records, sourceCode, targetCode, interval }) {
     }
   }, [direction, filters, records, sortBy])
 
+  const pagination = useMemo(
+    () => paginate(processed.rows, page, pageSize),
+    [page, pageSize, processed.rows],
+  )
+
   function updateFilter(name, value) {
     setFilters((current) => ({ ...current, [name]: value }))
+    setPage(1)
   }
 
   function clearFilters() {
     setFilters(initialFilters)
+    setPage(1)
   }
 
   function exportCsv() {
@@ -71,14 +81,14 @@ function HistoryTable({ records, sourceCode, targetCode, interval }) {
       <div className={styles.tableActions}>
         <label>
           Ordenar por
-          <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+          <select value={sortBy} onChange={(event) => { setSortBy(event.target.value); setPage(1) }}>
             <option value="date">Data</option>
             <option value="rate">Cotação</option>
           </select>
         </label>
         <label>
           Direção
-          <select value={direction} onChange={(event) => setDirection(event.target.value)}>
+          <select value={direction} onChange={(event) => { setDirection(event.target.value); setPage(1) }}>
             <option value="asc">Crescente</option>
             <option value="desc">Decrescente</option>
           </select>
@@ -91,28 +101,49 @@ function HistoryTable({ records, sourceCode, targetCode, interval }) {
         <p className={styles.noRows}>Nenhum registro corresponde aos filtros informados.</p>
       )}
       {!processed.error && processed.rows.length > 0 && (
-        <div className={styles.tableWrapper}>
-          <table>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Origem</th>
-                <th>Destino</th>
-                <th>Cotação</th>
-              </tr>
-            </thead>
-            <tbody>
-              {processed.rows.map((record) => (
-                <tr key={`${record.date}-${record.base}-${record.quote}`}>
-                  <td>{record.date}</td>
-                  <td>{record.base}</td>
-                  <td>{record.quote}</td>
-                  <td>{record.rate.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 6 })}</td>
+        <>
+          <div className={styles.tableWrapper}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                  <th>Cotação</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {pagination.rows.map((record) => (
+                  <tr key={`${record.date}-${record.base}-${record.quote}`}>
+                    <td>{record.date}</td>
+                    <td>{record.base}</td>
+                    <td>{record.quote}</td>
+                    <td>{record.rate.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 6 })}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className={styles.pagination} aria-label="Paginação da tabela">
+            <p>
+              Exibindo {pagination.from}–{pagination.to} de {processed.rows.length}
+            </p>
+            <label>
+              Por página
+              <select value={pageSize} onChange={(event) => { setPageSize(Number(event.target.value)); setPage(1) }}>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+            </label>
+            <div className={styles.pageButtons}>
+              <button type="button" onClick={() => setPage(pagination.currentPage - 1)} disabled={pagination.currentPage === 1} aria-label="Página anterior">Anterior</button>
+              <span aria-live="polite">Página {pagination.currentPage} de {pagination.totalPages}</span>
+              <button type="button" onClick={() => setPage(pagination.currentPage + 1)} disabled={pagination.currentPage === pagination.totalPages} aria-label="Próxima página">Próxima</button>
+            </div>
+          </div>
+        </>
       )}
     </section>
   )

@@ -24,7 +24,7 @@
   display: grid;
   place-items: center;
   border-radius: 10px;
-  color: white;
+  color: var(--accent-contrast);
   background: var(--blue);
 }
 

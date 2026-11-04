@@ -89,7 +89,7 @@ function ConverterForm({
       <div className={styles.sectionHeading}>
         <p className={styles.eyebrow}>Conversor</p>
         <div className={styles.titleRow}>
-          <h2 id="converter-title">Converta com a cotação mais recente</h2>
+          <h2 id="converter-title">Converta agora</h2>
           <button
             className={`${styles.favoriteButton} ${isFavorite ? styles.favoriteActive : ''}`}
             type="button"
@@ -102,7 +102,7 @@ function ConverterForm({
             <span>{sourceCode}/{targetCode}</span>
           </button>
         </div>
-        <p>Consulte taxas de referência e a data efetiva informada pela Frankfurter.</p>
+        <p>Informe o valor e escolha as moedas. A taxa e a data aparecem logo abaixo.</p>
       </div>
 
       <form className={styles.converterCard} onSubmit={handleSubmit} noValidate>

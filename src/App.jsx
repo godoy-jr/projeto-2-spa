@@ -9,6 +9,7 @@ import FavoritesSection from './components/FavoritesSection'
 import FloatingNav from './components/FloatingNav'
 import AppPanel from './components/AppPanel'
 import { useFavorites } from './hooks/useFavorites'
+import { useTheme } from './hooks/useTheme'
 import { getCurrencies } from './services/frankfurter'
 
 const navigationItems = [
@@ -27,6 +28,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('conversor')
   const [openPanel, setOpenPanel] = useState(null)
   const { favorites, toggleFavorite } = useFavorites()
+  const { theme, resolvedTheme, setTheme } = useTheme()
 
   useEffect(() => {
     const controller = new AbortController()
@@ -104,8 +106,8 @@ function App() {
 
       <main className={styles.main} id="inicio">
         <Hero
-          title="Entenda o câmbio sem complicação."
-          description="Converta valores e acompanhe a variação das moedas em uma experiência simples e direta."
+          title="Conversor de moedas"
+          description="Cotações de referência, histórico e favoritos em um só lugar."
         />
         <ConverterForm
           currencies={currencies}
@@ -135,7 +137,7 @@ function App() {
       </main>
 
       <Footer dataSource="API Frankfurter" />
-      <FloatingNav active={activeSection} onNavigate={handleNavigate} />
+      <FloatingNav active={activeSection} onNavigate={handleNavigate} theme={theme} resolvedTheme={resolvedTheme} onThemeChange={setTheme} />
       {openPanel && (
         <AppPanel
           type={openPanel}

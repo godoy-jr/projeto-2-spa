@@ -89,7 +89,7 @@ Consulte o estado verificável da entrega em [`docs/DELIVERY_CHECKLIST.md`](docs
 
 ## Verificação atual
 
-- 59 testes automatizados aprovados;
+- 65 testes automatizados aprovados;
 - lint concluído sem erros ou avisos;
 - build de produção concluído;
 - revisão independente confirmou os oito períodos, gráfico mobile, filtro de cotação, contagem, ordenação decrescente, CSV correspondente às linhas visíveis, bloqueio da exportação vazia e validação de mínimo maior que máximo;

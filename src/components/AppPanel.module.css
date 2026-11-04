@@ -1,6 +1,6 @@
-.backdrop { position: fixed; z-index: 30; inset: 0; display: grid; place-items: end center; padding: 24px 20px 108px; background: rgba(16,42,67,.28); }
-.panel { position: relative; width: min(520px, 100%); padding: 30px; border: 1px solid var(--border); border-radius: 24px; background: var(--surface); box-shadow: 0 24px 70px rgba(16,42,67,.28); }
-.close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 12px; color: var(--muted); background: #f1f5f9; cursor: pointer; }
+.backdrop { position: fixed; z-index: 30; inset: 0; display: grid; place-items: end center; padding: 24px 20px 108px; background: var(--overlay); }
+.panel { position: relative; width: min(520px, 100%); padding: 30px; border: 1px solid var(--border); border-radius: 20px; color: var(--text); background: var(--surface); box-shadow: var(--shadow); }
+.close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 12px; color: var(--muted); background: var(--surface-subtle); cursor: pointer; }
 .eyebrow { margin: 0 0 10px; color: var(--blue); font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .panel h2 { padding-right: 40px; }
 .panel > p:not(.eyebrow), .panel small { color: var(--muted); }
@@ -9,5 +9,5 @@
 .accountState { display: flex; gap: 14px; margin: 22px 0 14px; padding: 16px; border-radius: 14px; color: var(--navy); background: var(--blue-soft); }
 .accountState div { display: grid; gap: 4px; }
 .accountState span { color: var(--muted); font-size: .85rem; }
-.disabledLogin { width: 100%; min-height: 48px; margin-bottom: 12px; border: 0; border-radius: 10px; color: white; background: var(--blue); font-weight: 750; opacity: .58; }
+.disabledLogin { width: 100%; min-height: 48px; margin-bottom: 12px; border: 0; border-radius: 10px; color: var(--accent-contrast); background: var(--blue); font-weight: 750; opacity: .58; }
 @media (max-width: 560px) { .backdrop { padding: 14px 10px 94px; } .panel { padding: 24px 20px; border-radius: 20px; } }

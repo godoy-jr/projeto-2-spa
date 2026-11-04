@@ -1,9 +1,10 @@
 .historySection {
   display: grid;
   gap: 28px;
-  padding: 44px;
-  border-radius: 24px;
-  background: var(--blue-soft);
+  padding: 36px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
 }
 
 .heading {
@@ -38,7 +39,8 @@
   padding: 0 12px;
   border: 1px solid var(--border);
   border-radius: 9px;
-  background: white;
+  color: var(--text);
+  background: var(--surface);
 }
 
 .periodButtons { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -49,26 +51,26 @@
   border: 1px solid var(--border);
   border-radius: 9px;
   color: var(--navy);
-  background: white;
+  background: var(--surface);
   font-weight: 750;
   cursor: pointer;
 }
 .periodButtons button:disabled { cursor: not-allowed; opacity: 0.65; }
-.periodButtons .activePeriod { color: white; border-color: var(--green); background: var(--green); }
+.periodButtons .activePeriod { color: var(--accent-contrast); border-color: var(--accent); background: var(--accent); }
 
 .chartCard {
   min-width: 0;
   padding: 22px;
   border: 1px solid var(--border);
   border-radius: 16px;
-  background: white;
+  background: var(--surface);
 }
 .chart { width: 100%; height: 340px; }
 .chartSummary { margin: 0 0 18px; color: var(--muted); font-size: 0.9rem; }
 .statusMessage { margin: 0; color: var(--muted); font-weight: 650; }
 .statePanel { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .statePanel p { margin: 0; color: var(--muted); font-weight: 700; }
-.errorPanel p { color: #b42318; }
+.errorPanel p { color: var(--danger); }
 
 .statePanel button {
   color: var(--blue);
@@ -85,7 +87,7 @@
   padding: 0 16px;
   border: 0;
   border-radius: 9px;
-  color: white;
+  color: var(--accent-contrast);
   background: var(--blue);
   font-weight: 750;
   cursor: pointer;
@@ -106,19 +108,28 @@
   padding: 0 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: #f8fafc;
+  color: var(--text);
+  background: var(--surface-subtle);
 }
 .tableActions { display: flex; align-items: end; gap: 12px; margin-top: 14px; }
 .tableActions label { min-width: 150px; }
-.tableActions button { color: var(--blue); border: 1px solid var(--blue); background: white; }
-.filterError { margin: 16px 0 0; color: #b42318; font-weight: 700; }
+.tableActions button { color: var(--blue); border: 1px solid var(--blue); background: var(--surface); }
+.filterError { margin: 16px 0 0; color: var(--danger); font-weight: 700; }
 .noRows { margin: 18px 0 0; color: var(--muted); }
 .tableWrapper { overflow-x: auto; margin-top: 20px; }
 .tableWrapper table { width: 100%; border-collapse: collapse; text-align: left; }
 .tableWrapper th,
 .tableWrapper td { padding: 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
-.tableWrapper th { color: var(--navy); background: #f8fafc; font-size: 0.8rem; text-transform: uppercase; }
+.tableWrapper th { color: var(--navy); background: var(--surface-subtle); font-size: 0.8rem; text-transform: uppercase; }
 .tableWrapper td { color: var(--text); font-variant-numeric: tabular-nums; }
+.pagination { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; color: var(--muted); font-size: .85rem; }
+.pagination p { margin: 0; }
+.pagination label { display: flex; align-items: center; gap: 8px; color: var(--navy); font-weight: 700; }
+.pagination select { min-height: 38px; padding: 0 28px 0 10px; border: 1px solid var(--border); border-radius: 8px; color: var(--navy); background: var(--surface-subtle); }
+.pageButtons { display: flex; align-items: center; gap: 10px; }
+.pageButtons button { min-height: 38px; padding: 0 12px; border: 1px solid var(--blue); border-radius: 8px; color: var(--blue); background: var(--surface); font-weight: 750; cursor: pointer; }
+.pageButtons button:disabled { cursor: not-allowed; opacity: .45; }
+.pageButtons span { min-width: 96px; color: var(--navy); text-align: center; font-weight: 700; }
 
 @media (max-width: 860px) {
   .historySection {
@@ -141,6 +152,9 @@
   .filters { grid-template-columns: 1fr; }
   .tableActions label { width: 100%; }
   .exportButton { width: 100%; }
+  .pagination { align-items: stretch; flex-direction: column; }
+  .pagination label { justify-content: space-between; }
+  .pageButtons { justify-content: space-between; }
 }
 
 @media (min-width: 561px) and (max-width: 860px) {

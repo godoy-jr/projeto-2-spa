@@ -1,9 +1,15 @@
-.nav { position: fixed; z-index: 20; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; gap: 4px; padding: 7px; border: 1px solid rgba(217,226,236,.9); border-radius: 22px; background: rgba(255,255,255,.94); box-shadow: 0 16px 44px rgba(16,42,67,.2); backdrop-filter: blur(14px); }
-.nav button { position: relative; min-width: 76px; min-height: 54px; display: grid; place-items: center; gap: 2px; padding: 6px 10px; border: 0; border-radius: 16px; color: var(--muted); background: transparent; font-size: .68rem; font-weight: 750; cursor: pointer; }
-.nav button:hover { color: var(--blue); background: var(--blue-soft); }
-.nav .active { color: white; background: var(--blue); }
+.wrapper { position: fixed; z-index: 20; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); }
+.nav { display: flex; gap: 3px; padding: 6px; border: 1px solid var(--border); border-radius: 20px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+.nav button { min-width: 70px; min-height: 52px; display: grid; place-items: center; gap: 2px; padding: 5px 8px; border: 0; border-radius: 14px; color: var(--muted); background: transparent; font-size: .66rem; font-weight: 750; cursor: pointer; }
+.nav button:hover, .nav .themeActive { color: var(--accent); background: var(--surface-accent); }
+.nav .active { color: var(--accent-contrast); background: var(--accent); }
+.themeMenu { position: absolute; right: 0; bottom: calc(100% + 10px); width: 164px; display: grid; gap: 3px; padding: 6px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+.themeMenu button { padding: 10px 12px; border: 0; border-radius: 9px; color: var(--text); background: transparent; text-align: left; cursor: pointer; }
+.themeMenu button:hover, .themeMenu .selectedTheme { color: var(--accent); background: var(--surface-accent); font-weight: 750; }
+.themeMenu small { color: var(--muted); }
 @media (max-width: 560px) {
-  .nav { bottom: max(8px, env(safe-area-inset-bottom)); width: calc(100% - 20px); justify-content: space-around; border-radius: 20px; }
-  .nav button { min-width: 0; flex: 1; padding-inline: 3px; }
-  .nav button span { font-size: .62rem; }
+  .wrapper { bottom: max(8px, env(safe-area-inset-bottom)); width: calc(100% - 16px); }
+  .nav { width: 100%; justify-content: space-around; border-radius: 18px; }
+  .nav button { min-width: 0; flex: 1; padding-inline: 2px; }
+  .nav button span { font-size: .58rem; }
 }

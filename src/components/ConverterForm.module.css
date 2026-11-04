@@ -1,11 +1,11 @@
-.converterSection { padding: 72px 0 96px; }
+.converterSection { padding: 20px 0 64px; scroll-margin-top: 20px; }
 .sectionHeading { max-width: 640px; margin-bottom: 30px; }
 .sectionHeading > p:last-child { color: var(--muted); }
 .titleRow { display: flex; align-items: center; gap: 16px; }
 .titleRow h2 { flex: 1; }
 .favoriteButton { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 42px; padding: 0 13px; border: 1px solid var(--border); border-radius: 12px; color: var(--muted); background: var(--surface); font-weight: 750; cursor: pointer; }
-.favoriteButton:hover { color: #b45309; background: #fff7ed; }
-.favoriteActive { color: #d97706; border-color: #fed7aa; background: #fff7ed; }
+.favoriteButton:hover { color: var(--warning); background: var(--surface-accent); }
+.favoriteActive { color: var(--warning); border-color: var(--accent); background: var(--surface-accent); }
 .favoriteButton:disabled { cursor: not-allowed; opacity: .5; }
 .eyebrow {
   margin: 0 0 12px;
@@ -20,11 +20,10 @@
   grid-template-columns: 1fr 1fr auto 1fr auto;
   align-items: end;
   gap: 16px;
-  padding: 28px;
+  padding: 22px;
   border: 1px solid var(--border);
   border-radius: 22px;
   background: var(--surface);
-  box-shadow: var(--shadow);
 }
 .field { display: grid; gap: 8px; }
 .field label { color: var(--navy); font-size: 0.85rem; font-weight: 750; }
@@ -36,7 +35,7 @@
   border: 1px solid var(--border);
   border-radius: 9px;
   color: var(--text);
-  background: #f8fafc;
+  background: var(--surface-subtle);
 }
 .field input:focus,
 .field select:focus { border-color: var(--blue); outline: 3px solid rgba(37, 99, 235, 0.14); }
@@ -63,7 +62,7 @@
   padding: 0 20px;
   border: 0;
   border-radius: 9px;
-  color: white;
+  color: var(--accent-contrast);
   background: var(--blue);
   font-weight: 750;
   cursor: pointer;
@@ -82,8 +81,8 @@
   padding: 14px;
   border-radius: 10px;
 }
-.errorPanel { color: #b42318; background: #fff1f0; }
-.emptyPanel { color: var(--navy); background: #f8fafc; }
+.errorPanel { color: var(--danger); background: var(--surface-accent); }
+.emptyPanel { color: var(--navy); background: var(--surface-subtle); }
 .errorPanel p,
 .emptyPanel p { margin: 0; font-weight: 700; }
 .errorPanel button,
@@ -97,7 +96,7 @@
   font-weight: 750;
   cursor: pointer;
 }
-.errorMessage { margin: 12px 0 0; color: #b42318; font-weight: 700; }
+.errorMessage { margin: 12px 0 0; color: var(--danger); font-weight: 700; }
 .conversionResult {
   margin: 18px 0 0;
   padding: 18px;
